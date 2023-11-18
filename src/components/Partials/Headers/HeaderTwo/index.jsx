@@ -46,7 +46,7 @@ export default function HeaderTwo({ className, drawerAction, settings }) {
                   <Image
                     width="152"
                     height="36"
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL + settings.logo}`}
+                    src={"/assets/images/logo.svg"}
                     alt="logo"
                   />
                 )}

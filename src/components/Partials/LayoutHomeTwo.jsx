@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DiscountBanner from "../HomeTwo/DiscountBanner";
+// import DiscountBanner from "../HomeTwo/DiscountBanner";
 import Drawer from "../Mobile/Drawer";
 import Footer from "./Footers/FooterTwo";
 import HeaderTwo from "./Headers/HeaderTwo";
@@ -41,7 +41,7 @@ export default function LayoutHomeTwo({ children, childrenClasses }) {
         <div className={`w-full  ${childrenClasses || "pt-[30px] pb-[60px]"}`}>
           {children && children}
         </div>
-        {subscribeData && <DiscountBanner datas={subscribeData} />}
+        {/* {subscribeData && <DiscountBanner datas={subscribeData} />} */}
         <Footer settings={settings} />
       </div>
     </>

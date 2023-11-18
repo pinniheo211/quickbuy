@@ -1,10 +1,8 @@
 import Link from "next/link";
-import FontAwesomeCom from "../Helpers/icons/FontAwesomeCom";
-import SimpleSlider from "../Helpers/SliderCom";
-import ShopNowBtn from "../Helpers/Buttons/ShopNowBtn";
-import ServeLangItem from "../Helpers/ServeLangItem";
 import { useEffect } from "react";
 import settings from "../../../utils/settings";
+import ShopNowBtn from "../Helpers/Buttons/ShopNowBtn";
+import SimpleSlider from "../Helpers/SliderCom";
 export default function Banner({
   className,
   images = [],
@@ -45,32 +43,32 @@ export default function Banner({
                           <div
                             style={{
                               backgroundImage: `url(${
-                                process.env.NEXT_PUBLIC_BASE_URL + item.image
+                              item.image
                               })`,
                               backgroundSize: "cover",
                               backgroundRepeat: "no-repeat",
                             }}
-                            className="flex w-full max-w-full h-full h-auto relative items-center rtl:pr-[30px] ltr:pl-[30px]"
+                            className="flex w-full max-w-full h-full relative items-center rtl:pr-[30px] ltr:pl-[30px]"
                           >
                             <div>
-                              <div className="inline-block md:w-[112px] w-[100px] shadow md:h-[25px] h-[18px] flex items-center justify-center  bg-white rounded-full md:mb-[30px] mb-[15px]">
+                              <div className=" md:w-[112px] w-[100px] shadow md:h-[25px] h-[18px] flex items-center justify-center  bg-white rounded-full md:mb-[30px] mb-[15px]">
                                 <span className="text-qblack uppercase md:text-xs text-[10px] font-semibold">
-                                  {item.badge}
+                                  {/* {item.badge} */}123
                                 </span>
                               </div>
                               <div className="md:mb-[30px] mb-[15px]">
                                 <p className="md:text-[50px] text-[20px] leading-none text-qblack md:mb-3">
-                                  {item.title_one}
+                                  {item.title}
                                 </p>
                                 <h1 className="md:text-[50px] text-[20px] md:w-[400px] md:leading-[66px] text-qblack font-bold">
-                                  {item.title_two}
+                                  {item.des}
                                 </h1>
                               </div>
                               <div className="w-[90px]">
                                 <Link
                                   href={{
                                     pathname: "/single-product",
-                                    query: { slug: item.product_slug },
+                                    // query: { slug: item.product_slug },
                                   }}
                                   passHref
                                 >
@@ -86,7 +84,7 @@ export default function Banner({
                   </SimpleSlider>
                 </div>
               </div>
-              <div
+              {/* <div
                 data-aos="fade-left"
                 className="flex-1 flex xl:flex-col flex-row  xl:space-y-[30px] xl:h-full md:h-[350px] h-[150px]"
               >
@@ -240,9 +238,9 @@ export default function Banner({
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
-            <div
+            {/* <div
               data-aos="fade-up"
               className="best-services w-full bg-white flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10"
             >
@@ -268,7 +266,7 @@ export default function Banner({
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

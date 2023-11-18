@@ -46,7 +46,7 @@ export default function Header({ drawerAction, settings, contact }) {
                   <Image
                     layout="fill"
                     objectFit="scale-down"
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL + settings.logo}`}
+                    src={"/assets/images/logo.svg"}
                     alt="logo"
                   />
                 )}

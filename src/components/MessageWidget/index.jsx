@@ -1,18 +1,17 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import ReactTimeAgo from "react-time-ago";
-import EmojiPicker from "emoji-picker-react";
-import Image from "next/image";
-import {useRouter} from "next/dist/client/router";
 import axios from "axios";
+import EmojiPicker from "emoji-picker-react";
+import Echo from "laravel-echo";
+import { useRouter } from "next/dist/client/router";
+import Image from "next/image";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import ReactTimeAgo from "react-time-ago";
+import auth from "../../../utils/auth";
+import settings from "../../../utils/settings";
+import LoginContext from "../Contexts/LoginContext";
+import MessageContext from "../Contexts/MessageContext";
+import ServeLangItem from "../Helpers/ServeLangItem";
 import Star from "../Helpers/icons/Star";
 import CheckProductIsExistsInFlashSale from "../Shared/CheckProductIsExistsInFlashSale";
-import settings from "../../../utils/settings";
-import MessageContext from "../Contexts/MessageContext";
-import Pusher from "pusher-js";
-import Echo from "laravel-echo";
-import auth from "../../../utils/auth";
-import LoginContext from "../Contexts/LoginContext";
-import ServeLangItem from "../Helpers/ServeLangItem";
 
 function Index({pusher}) {
     //== states

@@ -1,26 +1,23 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import TawkTo from "tawkto-react";
+import apiRequest from "../../../utils/apiRequest";
+import auth from "../../../utils/auth";
+import languageModel from "../../../utils/languageModel";
+import settings from "../../../utils/settings";
 import { fetchCart } from "../../store/Cart";
 import { fetchCompareProducts } from "../../store/compareProduct";
 import { setupAction } from "../../store/websiteSetup";
 import { fetchWishlist } from "../../store/wishlistData";
-import TawkTo from "tawkto-react";
-import Consent from "../Helpers/Consent";
-import Script from "next/script";
-import { useRouter } from "next/router";
-import languageModel from "../../../utils/languageModel";
 import LoginWidget from "../Auth/Login/LoginWidget";
-import LoginContext from "../Contexts/LoginContext";
-import settings from "../../../utils/settings";
 import SignupWidget from "../Auth/Signup/SignupWidget";
 import VerifyWidget from "../Auth/Signup/VerifyWidget";
-import auth from "../../../utils/auth";
-import apiRequest from "../../../utils/apiRequest";
-import {toast} from "react-toastify";
+import LoginContext from "../Contexts/LoginContext";
+import Consent from "../Helpers/Consent";
 import ServeLangItem from "../Helpers/ServeLangItem";
-import MessageWidget from "../MessageWidget";
-import Multivendor from "../Shared/Multivendor";
 
 export default function DefaultLayout({ children }) {
   const router = useRouter();
@@ -180,24 +177,6 @@ export default function DefaultLayout({ children }) {
   }, [dispatch, getLoginContexts.loginPopup]);
 
   return (
-    <>
-      {gtagId && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', '${gtagId}');
-        `}
-          </Script>
-        </>
-      )}
       <div className={`relative`}>
         <div>
           {!load && (
@@ -254,18 +233,10 @@ export default function DefaultLayout({ children }) {
                       </div>
                     </div>
                 )}
-                {parseInt(enable_multivendor)===1&&messageWid&&(
-                    <MessageWidget pusher={messageWid} />
-                )}
+               
               </>
           )}
         </div>
       </div>
-      {/*<LoginContext.Consumer>*/}
-      {/*  {({ loginPopup, handlerPopup }) => (*/}
-      {/*   */}
-      {/*  )}*/}
-      {/*</LoginContext.Consumer>*/}
-    </>
   );
 }

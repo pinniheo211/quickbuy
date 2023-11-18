@@ -11,9 +11,7 @@ function PageHead(props) {
       <meta name="description" content={metaDes} />
       <link
         rel="icon"
-        href={`${
-          favicon ? process.env.NEXT_PUBLIC_BASE_URL + favicon : "/favico.svg"
-        }`}
+        href={"/favico.svg"}
       />
     </Head>
   );

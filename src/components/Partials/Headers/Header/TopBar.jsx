@@ -1,9 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import Arrow from "../../../Helpers/icons/Arrow";
-import Selectbox from "../../../Helpers/Selectbox";
 // import ThinPeople from "../../../Helpers/icons/ThinPeople";
-import auth from "../../../../../utils/auth";
 import { useEffect, useState } from "react";
 import ServeLangItem from "../../../Helpers/ServeLangItem";
 import Multivendor from "../../../Shared/Multivendor";
@@ -106,51 +102,6 @@ export default function TopBar({ className, contact }) {
                     {contact && contact.email}
                   </span>
                 </div>
-                {/*<div className="country-select flex space-x-1 items-center">*/}
-                {/*  <div>*/}
-                {/*    <Image*/}
-                {/*      src={`/assets/images/country-logo-16x16.png`}*/}
-                {/*      width="16"*/}
-                {/*      height="16"*/}
-                {/*      alt="country logo"*/}
-                {/*      className="overflow-hidden rounded-full"*/}
-                {/*    />*/}
-                {/*  </div>*/}
-                {/*  <Selectbox*/}
-                {/*    className="w-fit"*/}
-                {/*    defaultValue="United State"*/}
-                {/*    datas={[*/}
-                {/*      { id: 1, name: "United State" },*/}
-                {/*      { id: 2, name: "Bangladesh" },*/}
-                {/*      { id: 3, name: "India" },*/}
-                {/*    ]}*/}
-                {/*  />*/}
-                {/*  <div>*/}
-                {/*    <Arrow className="fill-current qblack" />*/}
-                {/*  </div>*/}
-                {/*</div>*/}
-                {/*<div className="currency-select flex space-x-1 items-center">*/}
-                {/*  <Selectbox*/}
-                {/*    defaultValue="USD"*/}
-                {/*    className="w-fit"*/}
-                {/*    datas={[*/}
-                {/*      { id: 1, name: "USD" },*/}
-                {/*      { id: 2, name: "BDT" },*/}
-                {/*    ]}*/}
-                {/*  />*/}
-                {/*  <Arrow className="fill-current qblack" />*/}
-                {/*</div>*/}
-                {/*<div className="language-select flex space-x-1 items-center">*/}
-                {/*  <Selectbox*/}
-                {/*    defaultValue="Bangla"*/}
-                {/*    className="w-fit"*/}
-                {/*    datas={[*/}
-                {/*      { id: 1, name: "Bangla" },*/}
-                {/*      { id: 2, name: "English" },*/}
-                {/*    ]}*/}
-                {/*  />*/}
-                {/*  <Arrow className="fill-current qblack" />*/}
-                {/*</div>*/}
               </div>
             </div>
             {Multivendor() === 1 && (

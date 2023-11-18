@@ -1,24 +1,13 @@
 import { useEffect, useState } from "react";
 import settings from "../../../utils/settings";
-import SectionStyleFour from "../Helpers/SectionStyleFour";
-import SectionStyleOne from "../Helpers/SectionStyleOne";
-import SectionStyleThree from "../Helpers/SectionStyleThree";
-import SectionStyleTwo from "../Helpers/SectionStyleTwo";
-import ViewMoreTitle from "../Helpers/ViewMoreTitle";
 import Layout from "../Partials/Layout";
-import Ads from "./Ads";
 import Banner from "./Banner";
-import BestSellers from "./BestSellers";
-import BrandSection from "./BrandSection";
-import CampaignCountDown from "./CampaignCountDown";
+import { BANNER_DUMMY } from "./helper";
+
 // import ProductsAds from "./ProductsAds";
-import TwoColumnAds from "./ProductAds/TwoColumnAds";
-import OneColumnAdsOne from "./ProductAds/OneColumnAdsOne";
-import OneColumnAdsTwo from "./ProductAds/OneColumnAdsTwo";
-import CategorySection from "./CategorySection";
 
 export default function Home({ homepageData }) {
-  const getsectionTitles = homepageData.section_title;
+  const getsectionTitles = homepageData?.section_title;
   const [sectionTitles, setSectionTitles] = useState(null);
   useEffect(() => {
     if (!sectionTitles) {
@@ -29,7 +18,7 @@ export default function Home({ homepageData }) {
             [item.key]: item.custom ? item.custom : item.default,
           };
         });
-      setSectionTitles(Object.assign.apply(Object, tem));
+      // setSectionTitles(Object.assign.apply(Object, tem));
     }
   }, [sectionTitles]);
 
@@ -41,19 +30,22 @@ export default function Home({ homepageData }) {
       setIsMultivendor(enable_multivendor && parseInt(enable_multivendor));
     }
   }, [isMultivendor]);
+  const {data} = homepageData
+  console.log(data?.data_best_of_day,"homepageData1")
+
   return (
     <>
       <Layout>
-        <Ads />
-        {homepage && (
+     {homepage && (
           <Banner
-            images={homepage.sliders}
-            services={homepage.services}
-            sidebarImgOne={homepage.sliderBannerOne}
-            sidebarImgTwo={homepage.sliderBannerTwo}
+            images={BANNER_DUMMY}
+            // services={homepage.services}
+            // sidebarImgOne={homepage.sliderBannerOne}
+            // sidebarImgTwo={homepage.sliderBannerTwo}
             className="banner-wrapper md:mb-[60px] mb-[30px]"
           />
         )}
+           {/* 
         {homepage && (
           <CategorySection
             categories={homepage.homepage_categories}
@@ -181,7 +173,7 @@ export default function Home({ homepageData }) {
             seeMoreUrl={`/products?highlight=best_product`}
             className="category-products md:mb-[60px] mb-[30px]"
           />
-        )}
+        )} */}
       </Layout>
     </>
   );

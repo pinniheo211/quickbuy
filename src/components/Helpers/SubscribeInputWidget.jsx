@@ -1,25 +1,12 @@
 import { useState } from "react";
-import apiRequest from "../../../utils/apiRequest";
-import { toast } from "react-toastify";
-import ServeLangItem from "./ServeLangItem";
 
 function SubscribeInputWidget(props) {
   const [email, setEmail] = useState("");
-  const subscribehandler = () => {
-    apiRequest
-      .subscribeRequest({ email: email })
-      .then((res) => {
-        toast.success(res.data.message);
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error(err.response && err.response.data.message);
-      });
-  };
+ 
   return (
     <div
       data-aos="fade-right"
-      className="sm:w-[543px] w-[300px] h-[54px] flex mt-8"
+      className="sm:w-[543px] w-full px-3 h-[54px] flex mt-8 mx-auto"
     >
       <div className="flex-1 bg-white ltr:pl-4 rtl:pr-4 flex rtl:space-x-reverse space-x-2 items-center h-full focus-within:text-qyellow text-qblack">
         <span>
@@ -56,11 +43,10 @@ function SubscribeInputWidget(props) {
         />
       </div>
       <button
-        onClick={subscribehandler}
         type="button"
-        className="sm:w-[158px] w-[80px]  h-full bg-qyellow text-sm font-600"
+        className="sm:w-[158px] w-[100px] !text-white h-full bg-qyellow text-sm font-600"
       >
-        {ServeLangItem()?.Get_the_Coupon}
+     Subscribe
       </button>
     </div>
   );

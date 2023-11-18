@@ -1,6 +1,6 @@
-import TrackingOrder from "../src/components/TrackingOrder/index";
 import PageHead from "../src/components/Helpers/PageHead";
 import Layout from "../src/components/Partials/Layout";
+import TrackingOrder from "../src/components/TrackingOrder/index";
 function trackingOrderPage() {
   return (
     <>

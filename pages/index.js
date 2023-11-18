@@ -5,18 +5,18 @@ export default function HomePage({ data }) {
   const { seoSetting } = data;
   return (
     <>
-
       <PageHead
-        title={`${seoSetting.seo_title}`}
-        metaDes={seoSetting.seo_description}
+        title={`Home - Welcome to Now Market`}
+        metaDes={`Now Market Ecommerce`}
       />
       <Home homepageData={data} />
     </>
   );
 }
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/`);
+  const res = await fetch(
+    `${process.env.NEXT_BASE_URL}api/v1/user/product/homeAll`
+  );
   const data = await res.json();
   return { props: { data } };
 }
