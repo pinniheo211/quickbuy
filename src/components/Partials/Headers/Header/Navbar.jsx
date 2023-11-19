@@ -1,14 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Arrow from "../../../Helpers/icons/Arrow";
-import FontAwesomeCom from "../../../Helpers/icons/FontAwesomeCom";
-import Multivendor from "../../../Shared/Multivendor";
 import ServeLangItem from "../../../Helpers/ServeLangItem";
+import Arrow from "../../../Helpers/icons/Arrow";
 export default function Navbar({ className }) {
   const { websiteSetup } = useSelector((state) => state.websiteSetup);
-  const categoryList = websiteSetup && websiteSetup.payload.productCategories;
+  const { category } = useSelector((state) => state.category);
+  const categoryList = category && category.data.rows;
   const mageMenuList = websiteSetup && websiteSetup.payload.megaMenuCategories;
   const megaMenuBanner = websiteSetup && websiteSetup.payload.megaMenuBanner;
   const customPages = websiteSetup && websiteSetup.payload.customPages;
@@ -28,10 +26,10 @@ export default function Navbar({ className }) {
         className || ""
       }`}
     >
-      <div className="container-x mx-auto h-full">
+      <div className="container mx-auto h-full">
         <div className="w-full h-full relative">
           <div className="w-full h-full flex justify-between items-center">
-            <div className="category-and-nav flex xl:rtl:space-x-reverse space-x-7 rtl:space-x-reverse space-x-3 items-center">
+            <div className="category-and-nav flex xl:rtl:space-x-reverse rtl:space-x-reverse space-x-3 items-center">
               <div className="category w-[270px] h-[53px] bg-white px-5 rounded-t-md mt-[6px] relative">
                 <button
                   onClick={handler}
@@ -83,25 +81,25 @@ export default function Navbar({ className }) {
                   <ul className="categories-list relative">
                     {categoryList &&
                       categoryList.map((item) => (
-                        <li key={item.id} className="category-item">
+                        <li key={item.category_id} className="category-item">
                           <Link
                             href={{
                               pathname: "/products",
-                              query: { category: item.slug },
+                              query: { category: item.category_id },
                             }}
                             passHref
                           >
                             <a rel="noopener noreferrer">
                               <div className=" flex justify-between items-center px-5 h-10 transition-all duration-300 ease-in-out cursor-pointer">
                                 <div className="flex items-center rtl:space-x-reverse space-x-6">
-                                  <span>
+                                  {/* <span>
                                     <FontAwesomeCom
                                       className="w-4 h-4"
                                       icon={item.icon}
                                     />
-                                  </span>
+                                  </span> */}
                                   <span className="text-xs font-400">
-                                    {item.name}
+                                    {item.category_name}
                                   </span>
                                 </div>
                                 <div>
@@ -136,12 +134,8 @@ export default function Navbar({ className }) {
                               </div>
                             </a>
                           </Link>
-                          <div
-                            className={`sub-category-lvl-two absolute ltr:left-[270px] rtl:right-[270px] top-0 z-10 w-[270px] ${
-                              item.active_sub_categories.length > 0
-                                ? "bg-white"
-                                : ""
-                            }`}
+                          {/* <div
+                            className={`sub-category-lvl-two absolute ltr:left-[270px] rtl:right-[270px] top-0 z-10 w-[270px] ${""}`}
                             style={{ height: `${subCatHeight}px` }}
                           >
                             <ul className="">
@@ -243,194 +237,37 @@ export default function Navbar({ className }) {
                                   </li>
                                 ))}
                             </ul>
-                          </div>
+                          </div> */}
                         </li>
                       ))}
                   </ul>
                 </div>
               </div>
               <div className="nav">
-                <ul className="nav-wrapper flex xl:space-x-10 rtl:space-x-reverse space-x-5">
-                  {/*<li className="relative">*/}
-                  {/*  <Link href="/">*/}
-                  {/*    <span className="flex items-center text-sm font-600 cursor-pointer ">*/}
-                  {/*      <span>Homepage</span>*/}
-                  {/*      <span className="ml-1.5 ">*/}
-                  {/*        <Arrow className="fill-current" />*/}
-                  {/*      </span>*/}
-                  {/*    </span>*/}
-                  {/*  </Link>*/}
-                  {/*  <div className="sub-menu w-[220px] absolute left-0 top-[60px]">*/}
-                  {/*    <div*/}
-                  {/*      className="w-full bg-white flex justify-between items-center "*/}
-                  {/*      style={{*/}
-                  {/*        boxShadow: "0px 15px 50px 0px rgba(0, 0, 0, 0.14)",*/}
-                  {/*      }}*/}
-                  {/*    >*/}
-                  {/*      <div className="categories-wrapper w-full h-full p-5">*/}
-                  {/*        <div>*/}
-                  {/*          <div className="category-items">*/}
-                  {/*            <ul className="flex flex-col space-y-2">*/}
-                  {/*              <li>*/}
-                  {/*                <Link href="/home-two">*/}
-                  {/*                  <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">*/}
-                  {/*                    Home two*/}
-                  {/*                  </span>*/}
-                  {/*                </Link>*/}
-                  {/*              </li>*/}
-                  {/*            </ul>*/}
-                  {/*          </div>*/}
-                  {/*        </div>*/}
-                  {/*      </div>*/}
-                  {/*    </div>*/}
-                  {/*  </div>*/}
-                  {/*</li>*/}
+                <ul className="nav-wrapper flex xl:space-x-10 rtl:space-x-reverse space-x-5 pl-2">
                   <li>
-                    <span className="flex items-center text-sm font-600 cursor-pointer ">
-                      <span>{ServeLangItem()?.Shop}</span>
-                      <span className="ml-1.5 ">
-                        <Arrow className="fill-current" />
-                      </span>
-                    </span>
-                    <div className="sub-menu w-full absolute left-0 top-[60px]">
-                      <div
-                        className="mega-menu-wrapper w-full bg-white p-[30px] flex justify-between items-center "
-                        style={{
-                          minHeight: "295px",
-                          boxShadow: "0px 15px 50px 0px rgba(0, 0, 0, 0.14)",
-                        }}
-                      >
-                        <div className="categories-wrapper flex-1 h-full flex justify-around -ml-[70px]">
-                          {mageMenuList &&
-                            mageMenuList.slice(0, 3).map((megaItem) => (
-                              <div key={megaItem.id}>
-                                <div className="category">
-                                  <h1 className="text-[13px] font-700 text-qblack uppercase mb-[13px]">
-                                    {megaItem.category.name}
-                                  </h1>
-                                </div>
-                                <div className="category-items">
-                                  <ul className="flex flex-col space-y-2">
-                                    {megaItem.sub_categories.length > 0 &&
-                                      megaItem.sub_categories.map((subItem) => (
-                                        <li key={subItem.id}>
-                                          <Link
-                                            href={{
-                                              pathname: "/products",
-                                              query: {
-                                                sub_category:
-                                                  subItem.sub_category &&
-                                                  subItem.sub_category.slug,
-                                              },
-                                            }}
-                                            passHref
-                                          >
-                                            <a rel="noopener noreferrer">
-                                              <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer cursor-pointer">
-                                                {subItem.sub_category &&
-                                                  subItem.sub_category.name}
-                                              </span>
-                                            </a>
-                                          </Link>
-                                        </li>
-                                      ))}
-                                  </ul>
-                                </div>
-                              </div>
-                            ))}
-                        </div>
-                        {megaMenuBanner && (
-                          <div
-                            style={{
-                              backgroundImage: `url(${
-                                process.env.NEXT_PUBLIC_BASE_URL +
-                                megaMenuBanner.image
-                              })`,
-                              backgroundSize: "contain",
-                              backgroundRepeat: "no-repeat",
-                            }}
-                            className="thumbnil w-[348px] h-[235px] relative flex items-center ltr:pl-[40px] rtl:pr-[40px] group"
-                          >
-                            <div className="flex flex-col justify-between">
-                              <div>
-                                <div className=" mb-[10px]">
-                                  <span className="text-qblack uppercase text-xs font-semibold">
-                                    {megaMenuBanner.title_one}
-                                  </span>
-                                </div>
-                                <div className="mb-[30px]">
-                                  <h1 className="w-[160px] text-[24px] leading-[32px] text-qblack font-semibold">
-                                    {megaMenuBanner.title_two}
-                                  </h1>
-                                </div>
-                              </div>
-                              <div className="w-[90px]">
-                                <Link
-                                  href={{
-                                    pathname: "/products",
-                                    query: {
-                                      category: megaMenuBanner.product_slug,
-                                    },
-                                  }}
-                                  passHref
-                                >
-                                  <a rel="noopener noreferrer">
-                                    <div className="cursor-pointer w-full relative  ">
-                                      <div className="inline-flex  rtl:space-x-reverse space-x-1.5 items-center relative z-20">
-                                        <span className="text-sm text-qblack font-medium leading-[30px]">
-                                          {ServeLangItem()?.Shop_Now}
-                                        </span>
-                                        <span className="leading-[30px]">
-                                          <svg
-                                            className={`transform rtl:rotate-180`}
-                                            width="7"
-                                            height="11"
-                                            viewBox="0 0 7 11"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <rect
-                                              x="2.08984"
-                                              y="0.636719"
-                                              width="6.94219"
-                                              height="1.54271"
-                                              transform="rotate(45 2.08984 0.636719)"
-                                              fill="#1D1D1D"
-                                            />
-                                            <rect
-                                              x="7"
-                                              y="5.54492"
-                                              width="6.94219"
-                                              height="1.54271"
-                                              transform="rotate(135 7 5.54492)"
-                                              fill="#1D1D1D"
-                                            />
-                                          </svg>
-                                        </span>
-                                      </div>
-                                      <div className="w-[82px] transition-all duration-300 ease-in-out group-hover:h-4 h-[0px] bg-qyellow absolute left-0 bottom-0 z-10"></div>
-                                    </div>
-                                  </a>
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </li>
-
-                  <li>
-                    <Link href="/sellers" passHref>
+                    <Link href="/" passHref>
+                      {/* <Link href="/sellers" passHref> */}
                       <a rel="noopener noreferrer">
                         <span className="flex items-center text-sm font-600 cursor-pointer ">
-                          <span>{ServeLangItem()?.Sellers}</span>
+                          <span>Products Package</span>
                         </span>
                       </a>
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blogs" passHref>
+                    <Link href="/" passHref>
+                      {/* <Link href="/sellers" passHref> */}
+                      <a rel="noopener noreferrer">
+                        <span className="flex items-center text-sm font-600 cursor-pointer ">
+                          <span>Best {ServeLangItem()?.Sellers}</span>
+                        </span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/" passHref>
+                      {/* <Link href="/blogs" passHref> */}
                       <a rel="noopener noreferrer">
                         <span className="flex items-center text-sm font-600 cursor-pointer ">
                           <span className="capitalize">
@@ -441,7 +278,8 @@ export default function Navbar({ className }) {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/about" passHref>
+                    <Link href="/" passHref>
+                      {/* <Link href="/about" passHref> */}
                       <a rel="noopener noreferrer">
                         <span className="flex items-center text-sm font-600 cursor-pointer ">
                           <span>{ServeLangItem()?.About}</span>
@@ -450,7 +288,8 @@ export default function Navbar({ className }) {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/contact" passHref>
+                    <Link href="/" passHref>
+                      {/* <Link href="/contact" passHref> */}
                       <a rel="noopener noreferrer">
                         <span className="flex items-center text-sm font-600 cursor-pointer ">
                           <span>{ServeLangItem()?.Contact}</span>
@@ -458,112 +297,10 @@ export default function Navbar({ className }) {
                       </a>
                     </Link>
                   </li>
-                  <li className="relative">
-                    <span className="flex items-center text-sm font-600 cursor-pointer ">
-                      <span>{ServeLangItem()?.Pages}</span>
-                      <span className="ml-1.5 ">
-                        <Arrow className="fill-current" />
-                      </span>
-                    </span>
-                    <div className="sub-menu w-[220px] absolute left-0 top-[60px]">
-                      <div
-                        className="w-full bg-white flex justify-between items-center "
-                        style={{
-                          boxShadow: "0px 15px 50px 0px rgba(0, 0, 0, 0.14)",
-                        }}
-                      >
-                        <div className="categories-wrapper w-full h-full p-5">
-                          <div>
-                            <div className="category-items">
-                              <ul className="flex flex-col space-y-2">
-                                <li>
-                                  <Link href="/privacy-policy" passHref>
-                                    <a rel="noopener noreferrer">
-                                      <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">
-                                        {ServeLangItem()?.Privacy_Policy}
-                                      </span>
-                                    </a>
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link href="/terms-condition" passHref>
-                                    <a rel="noopener noreferrer">
-                                      <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">
-                                        {ServeLangItem()?.Term_and_Conditions}
-                                      </span>
-                                    </a>
-                                  </Link>
-                                </li>
-                                {Multivendor() === 1 && (
-                                  <li>
-                                    <Link
-                                      href="seller-terms-condition"
-                                      passHref
-                                    >
-                                      <a rel="noopener noreferrer">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">
-                                          {
-                                            ServeLangItem()
-                                              ?.Seller_terms_and_conditions
-                                          }
-                                        </span>
-                                      </a>
-                                    </Link>
-                                  </li>
-                                )}
-                                <li>
-                                  <Link href="/faq" passHref>
-                                    <a rel="noopener noreferrer">
-                                      <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">
-                                        {ServeLangItem()?.FAQ}
-                                      </span>
-                                    </a>
-                                  </Link>
-                                </li>
-                                {customPages &&
-                                  customPages.length > 0 &&
-                                  customPages.map((item, i) => (
-                                    // eslint-disable-next-line react/jsx-key
-                                    <React.Fragment key={i}>
-                                      <li>
-                                        <Link
-                                          href={`/pages?custom=${item.slug}`}
-                                          passHref
-                                        >
-                                          <a rel="noopener noreferrer">
-                                            <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">
-                                              {item.page_name}
-                                            </span>
-                                          </a>
-                                        </Link>
-                                      </li>
-                                    </React.Fragment>
-                                  ))}
-                                {/*<li>*/}
-                                {/*  <Link href="#">*/}
-                                {/*    <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">*/}
-                                {/*      Shop Category Icon*/}
-                                {/*    </span>*/}
-                                {/*  </Link>*/}
-                                {/*</li>*/}
-                                {/*<li>*/}
-                                {/*  <Link href="#">*/}
-                                {/*    <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">*/}
-                                {/*      Shop List View*/}
-                                {/*    </span>*/}
-                                {/*  </Link>*/}
-                                {/*</li>*/}
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
                 </ul>
               </div>
             </div>
-            {Multivendor() === 1 && (
+            {/* {Multivendor() === 1 && (
               <div className="become-seller-btn">
                 <Link href="/become-seller" passHref>
                   <a rel="noopener noreferrer">
@@ -601,7 +338,7 @@ export default function Navbar({ className }) {
                   </a>
                 </Link>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

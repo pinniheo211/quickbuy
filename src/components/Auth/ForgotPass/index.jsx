@@ -1,13 +1,13 @@
+import Image from "next/dist/client/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import apiRequest from "../../../../utils/apiRequest";
 import InputCom from "../../Helpers/InputCom";
 import LoaderStyleOne from "../../Helpers/Loaders/LoaderStyleOne";
-import Layout from "../../Partials/Layout";
-import { useSelector } from "react-redux";
-import Image from "next/dist/client/image";
 import ServeLangItem from "../../Helpers/ServeLangItem";
+import Layout from "../../Partials/Layout";
 
 export default function ForgotPass() {
   const { websiteSetup } = useSelector((state) => state.websiteSetup);
@@ -87,7 +87,7 @@ export default function ForgotPass() {
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="login-page-wrapper w-full py-10">
-        <div className="container-x mx-auto">
+        <div className="container mx-auto">
           <div className="lg:flex items-center relative">
             <div className="lg:w-[572px] w-full h-[783px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
               {forgotUser ? (

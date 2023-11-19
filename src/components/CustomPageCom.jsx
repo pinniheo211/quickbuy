@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Layout from "./Partials/Layout";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import PageTitle from "./Helpers/PageTitle";
+import Layout from "./Partials/Layout";
 // import languageModel from "../../utils/languageModel";
 import PageHead from "./Helpers/PageHead";
 import ServeLangItem from "./Helpers/ServeLangItem";
@@ -47,7 +47,7 @@ function CustomPageCom({ slug }) {
             )}
           </div>
           <div className="w-full">
-            <div className="container-x mx-auto">
+            <div className="container mx-auto">
               {pageData && (
                 <div
                   dangerouslySetInnerHTML={{

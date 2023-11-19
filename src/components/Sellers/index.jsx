@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import isMultivendor from "../../../Middleware/isMultivendor";
-import Star from "../Helpers/icons/Star";
 import PageTitle from "../Helpers/PageTitle";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import Star from "../Helpers/icons/Star";
 function Sallers({ sellersData }) {
   const { sellers } = sellersData;
   return (
@@ -19,7 +19,7 @@ function Sallers({ sellersData }) {
       </div>
 
       <div className="content-wrapper w-full mb-[60px]">
-        <div className="container-x mx-auto w-full">
+        <div className="container mx-auto w-full">
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-[30px] gap-5">
             {sellers &&
               sellers.data.length > 0 &&

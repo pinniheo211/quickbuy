@@ -57,7 +57,7 @@ export default function SallerPage() {
     <>
       <Layout>
         <div className="products-page-wrapper w-full">
-          <div className="container-x mx-auto">
+          <div className="container mx-auto">
             <div
               data-aos="fade-right"
               className="saller-info w-full mb-[40px] sm:h-[328px]  sm:flex justify-between items-center px-11 overflow-hidden relative py-10 sm:py-0"

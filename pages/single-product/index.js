@@ -12,19 +12,17 @@ const SingleProduct = ({ data }) => {
 
   return (
     <>
-      <PageHead
-          title={`${data.product && data.product.seo_title}`}
-          metaDes={data.product && data.product.seo_description}
-      />
+      <PageHead title={`${data && data.name}`} metaDes={data && data.name} />
       {router.query.slug && <SingleProductPage details={data} />}
     </>
   );
 };
 export const getServerSideProps = async (context) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}api/product/${context.query.slug}`
+    `${process.env.NEXT_BASE_URL}api/v1/user/product/detail?id=${context.query.slug}`
   );
-  const data = await res.json();
+  const { data } = await res.json();
+
   return {
     props: {
       data,

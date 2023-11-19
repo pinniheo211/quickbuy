@@ -4,7 +4,7 @@ import DataIteration from "../Helpers/DataIteration";
 export default function BrandSection({ className, sectionTitle, brands = [] }) {
   return (
     <div data-aos="fade-up" className={`w-full ${className || ""}`}>
-      <div className="container-x mx-auto">
+      <div className="container mx-auto">
         <div className=" section-title flex justify-between items-center mb-5">
           <div>
             <h1 className="sm:text-3xl text-xl font-600 text-qblacktext">

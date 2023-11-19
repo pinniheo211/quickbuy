@@ -2,6 +2,7 @@ module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
     extend: {
@@ -88,5 +89,9 @@ module.exports = {
       space: ["responsive", "direction"],
     },
   },
-  plugins: [require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("autoprefixer"),
+    require("@tailwindcss/line-clamp"),
+    require("tw-elements/dist/plugin.cjs"),
+  ],
 };

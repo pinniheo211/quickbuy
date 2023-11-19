@@ -1,5 +1,4 @@
 import ProductCardStyleOne from "../Helpers/Cards/ProductCardStyleOne";
-import CountDown from "../Helpers/CountDown";
 import DataIteration from "../Helpers/DataIteration";
 import Layout from "../Partials/Layout";
 import CountDownWidget from "./CountDownWidget";
@@ -25,7 +24,7 @@ export default function FlashSale({ fetchData }) {
   return (
     <Layout>
       <div className="flashsale-wrapper w-full">
-        <div className="container-x mx-auto">
+        <div className="container mx-auto">
           <div className="w-full">
             <div
               style={{

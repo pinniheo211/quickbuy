@@ -15,7 +15,7 @@ export default function TopBar({ className, contact }) {
           className || ""
         }`}
       >
-        <div className="container-x mx-auto h-full">
+        <div className="container mx-auto h-full">
           <div className="flex justify-between items-center h-full">
             <div className="topbar-nav">
               <ul className="flex space-x-6">
@@ -105,15 +105,15 @@ export default function TopBar({ className, contact }) {
               </div>
             </div>
             {Multivendor() === 1 && (
-                <div className="block lg:hidden">
-                  <Link href="/become-seller" passHref>
-                    <a rel="noopener noreferrer">
-                  <span className="text-xs leading-6 text-qblack px-3 py-1 bg-qyellow font-medium font-500 cursor-pointer">
-                    {ServeLangItem()?.Become_seller}
-                  </span>
-                    </a>
-                  </Link>
-                </div>
+              <div className="block lg:hidden">
+                <Link href="/become-seller" passHref>
+                  <a rel="noopener noreferrer">
+                    <span className="text-xs leading-6 text-qblack px-3 py-1 bg-qyellow font-medium font-500 cursor-pointer">
+                      {ServeLangItem()?.Become_seller}
+                    </span>
+                  </a>
+                </Link>
+              </div>
             )}
           </div>
         </div>

@@ -1,6 +1,6 @@
 import PageTitle from "../Helpers/PageTitle";
-import Layout from "../Partials/Layout";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import Layout from "../Partials/Layout";
 
 export default function TermsCondition({ datas }) {
   const { terms_conditions } = datas;
@@ -21,7 +21,7 @@ export default function TermsCondition({ datas }) {
         </div>
         <div className="w-full">
           <div
-            className="container-x mx-auto"
+            className="container mx-auto"
             dangerouslySetInnerHTML={{
               __html: terms_conditions.terms_and_condition,
             }}

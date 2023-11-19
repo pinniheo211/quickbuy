@@ -1,11 +1,11 @@
-import InputCom from "../Helpers/InputCom";
-import PageTitle from "../Helpers/PageTitle";
-import Layout from "../Partials/Layout";
-import apiRequest from "../../../utils/apiRequest";
-import { toast } from "react-toastify";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import apiRequest from "../../../utils/apiRequest";
+import InputCom from "../Helpers/InputCom";
 import LoaderStyleOne from "../Helpers/Loaders/LoaderStyleOne";
+import PageTitle from "../Helpers/PageTitle";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import Layout from "../Partials/Layout";
 
 export default function Contact({ datas }) {
   const [name, setName] = useState("");
@@ -49,7 +49,7 @@ export default function Contact({ datas }) {
         />
       </div>
       <div className="contact-wrapper w-full mb-10">
-        <div className="container-x mx-auto">
+        <div className="container mx-auto">
           <div className="main-wrapper w-full lg:flex lg:space-x-[30px] rtl:space-x-reverse">
             <div className="lg:w-1/2 w-full">
               {datas.contact && (

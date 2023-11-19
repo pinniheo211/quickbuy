@@ -6,6 +6,6 @@
     "incremental": true,
     "target": "ES6"
   },
-  "include": ["**/*.js", "**/*.jsx"],
+  "include": ["**/*.js", "**/*.jsx", "babelrc"],
   "exclude": ["node_modules"]
 }

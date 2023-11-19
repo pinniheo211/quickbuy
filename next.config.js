@@ -4,7 +4,12 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: [`${hostname}`]
+    domains: [
+      "img.tgdd.vn",
+      "cdn.tgdd.vn",
+      "static-images.vnncdn.net",
+      `${hostname}`,
+    ],
   },
 };
 

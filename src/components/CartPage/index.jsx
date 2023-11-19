@@ -1,16 +1,16 @@
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import isAuth from "../../../Middleware/isAuth";
+import apiRequest from "../../../utils/apiRequest";
+import auth from "../../../utils/auth";
+import { fetchCart } from "../../store/Cart";
 import BreadcrumbCom from "../BreadcrumbCom";
 import EmptyCardError from "../EmptyCardError";
 import PageTitle from "../Helpers/PageTitle";
-import ProductsTable from "./ProductsTable";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import auth from "../../../utils/auth";
-import apiRequest from "../../../utils/apiRequest";
-import { toast } from "react-toastify";
-import { fetchCart } from "../../store/Cart";
-import Link from "next/link";
-import isAuth from "../../../Middleware/isAuth";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import ProductsTable from "./ProductsTable";
 
 function CardPage() {
   const dispatch = useDispatch();
@@ -108,7 +108,7 @@ function CardPage() {
     <>
       {getCarts && getCarts.length === 0 ? (
         <div className="cart-page-wrapper w-full">
-          <div className="container-x mx-auto">
+          <div className="container mx-auto">
             <BreadcrumbCom
               paths={[
                 { name: ServeLangItem()?.home, path: "/" },
@@ -130,7 +130,7 @@ function CardPage() {
             />
           </div>
           <div className="w-full mt-[23px]">
-            <div className="container-x mx-auto">
+            <div className="container mx-auto">
               <ProductsTable
                 calCPriceDependQunatity={calCPriceDependQunatity}
                 incrementQty={serverReqIncreseQty}

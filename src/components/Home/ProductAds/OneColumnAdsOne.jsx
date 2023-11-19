@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/dist/client/link";
 import ServeLangItem from "../../Helpers/ServeLangItem";
 
@@ -7,7 +6,7 @@ function OneColumnAdsOne({ data }) {
     <div
       className={`one-column-ads-one md:h-[295px] h-[190px] md:mb-[60px] mb-[30px] w-full`}
     >
-      <div className="container-x mx-auto h-full">
+      <div className="container mx-auto h-full">
         <div
           data-aos="fade-right"
           style={{

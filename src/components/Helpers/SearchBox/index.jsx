@@ -1,5 +1,5 @@
 // import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import axios from "axios";
 import { useRouter } from "next/router";
@@ -9,34 +9,29 @@ export default function SearchBox({ className }) {
   const router = useRouter();
   const [toggleCat, setToggleCat] = useState(false);
   const { websiteSetup } = useSelector((state) => state.websiteSetup);
-  const [categories, setCategories] = useState(null);
+  const { category } = useSelector((state) => state.category);
+  const categoryList = category && category.data.rows;
   const [selectedCat, setSelectedCat] = useState(null);
   const [searchKey, setSearchkey] = useState("");
-  useEffect(()=>{
-    if(router && router.route && router.route==='/search'){
-      setSearchkey(router.query?router.query.search:'');
+  useEffect(() => {
+    if (router && router.route && router.route === "/search") {
+      setSearchkey(router.query ? router.query.search : "");
     }
-    return ()=>{
+    return () => {
       setSearchkey("");
-    }
-  },[router])
+    };
+  }, [router]);
   const categoryHandler = (value) => {
     setSelectedCat(value);
     setToggleCat(!toggleCat);
   };
-  useEffect(() => {
-    if (websiteSetup) {
-      setCategories(
-        websiteSetup.payload && websiteSetup.payload.productCategories
-      );
-    }
-  }, [websiteSetup]);
+
   const searchHandler = () => {
     if (searchKey !== "") {
       if (selectedCat) {
         router.push({
           pathname: "/search",
-          query: { search: searchKey, category: selectedCat.slug },
+          query: { search: searchKey, category: selectedCat.category_id },
         });
       } else {
         router.push({
@@ -47,7 +42,7 @@ export default function SearchBox({ className }) {
     } else if (searchKey === "" && selectedCat) {
       router.push({
         pathname: "/products",
-        query: { category: selectedCat.slug },
+        query: { category: selectedCat.category_id },
       });
     } else {
       return false;
@@ -69,7 +64,7 @@ export default function SearchBox({ className }) {
               onChange={(e) => setSearchkey(e.target.value)}
               type="text"
               className="search-input"
-              placeholder={ServeLangItem()?.Search_products+"..."}
+              placeholder={ServeLangItem()?.Search_products + "..."}
             />
           </div>
         </div>
@@ -81,7 +76,9 @@ export default function SearchBox({ className }) {
             className="w-full text-xs font-500 text-qgray flex justify-between items-center"
           >
             <span className="line-clamp-1">
-              {selectedCat ? selectedCat.name : ServeLangItem()?.All_Categories}
+              {selectedCat
+                ? selectedCat.category_name
+                : ServeLangItem()?.All_Categories}
             </span>
             <span>
               <svg
@@ -121,11 +118,11 @@ export default function SearchBox({ className }) {
                 style={{ boxShadow: "0px 15px 50px 0px rgba(0, 0, 0, 0.14)" }}
               >
                 <ul className="flex flex-col space-y-2">
-                  {categories &&
-                    categories.map((item, i) => (
+                  {categoryList &&
+                    categoryList.map((item, i) => (
                       <li onClick={() => categoryHandler(item)} key={i}>
                         <span className="text-qgray text-sm font-400 border-b border-transparent hover:border-qyellow hover:text-qyellow cursor-pointer">
-                          {item.name}
+                          {item.category_name}
                         </span>
                       </li>
                     ))}

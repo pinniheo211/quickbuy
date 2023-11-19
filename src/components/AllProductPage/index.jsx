@@ -4,15 +4,15 @@ import "react-input-range/lib/css/index.css";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import ProductCardRowStyleOne from "../Helpers/Cards/ProductCardRowStyleOne";
 import ProductCardStyleOne from "../Helpers/Cards/ProductCardStyleOne";
 import DataIteration from "../Helpers/DataIteration";
-import Star from "../Helpers/icons/Star";
-import Layout from "../Partials/Layout";
-import ProductsFilter from "./ProductsFilter";
-import OneColumnAdsTwo from "../Home/ProductAds/OneColumnAdsTwo";
-import ProductCardRowStyleOne from "../Helpers/Cards/ProductCardRowStyleOne";
 import LoaderStyleOne from "../Helpers/Loaders/LoaderStyleOne";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import Star from "../Helpers/icons/Star";
+import OneColumnAdsTwo from "../Home/ProductAds/OneColumnAdsTwo";
+import Layout from "../Partials/Layout";
+import ProductsFilter from "./ProductsFilter";
 
 export default function AllProductPage({ response, sellerInfo }) {
   const [resProducts, setProducts] = useState(null);
@@ -27,17 +27,18 @@ export default function AllProductPage({ response, sellerInfo }) {
     resProducts.length > 0 &&
     resProducts.map((item) => {
       return {
-        id: item.id,
-        title: item.name,
-        slug: item.slug,
-        image: process.env.NEXT_PUBLIC_BASE_URL + item.thumb_image,
-        price: item.price,
-        offer_price: item.offer_price,
+        id: item.product_id,
+        title: item.product_name,
+        slug: item.product_id,
+        image: item.product_image,
+        price: item.product_price,
+        offer_price: item.product_price_sale,
         campaingn_product: null,
-        review: parseInt(item.averageRating),
-        variants: item.active_variants ? item.active_variants : [],
+        // review: parseInt(item.averageRating),
+        variants: [],
       };
     });
+
   const [selectedVarientFilterItem, setSelectedVarientFilterItem] = useState(
     []
   );
@@ -136,161 +137,136 @@ export default function AllProductPage({ response, sellerInfo }) {
   const [filterToggle, setToggle] = useState(false);
 
   useEffect(() => {
-    setProducts(response.data && response.data.products.data);
-    setNxtPage(response.data && response.data.products.next_page_url);
-    setCategoriesFilter(
-      response.data &&
-        response.data.categories.length > 0 &&
-        response.data.categories.map((item) => {
-          return {
-            ...item,
-            selected: false,
-          };
-        })
-    );
-    setVariantsFilter(
-      response.data &&
-        response.data.activeVariants.length > 0 &&
-        response.data.activeVariants.map((varient) => {
-          return {
-            ...varient,
-            active_variant_items:
-              varient.active_variant_items &&
-              varient.active_variant_items.length > 0 &&
-              varient.active_variant_items.map((variant_item) => {
-                return {
-                  ...variant_item,
-                  selected: false,
-                };
-              }),
-          };
-        })
-    );
-    setBrands(
-      response.data &&
-        response.data.brands.length > 0 &&
-        response.data.brands.map((item) => {
-          return {
-            ...item,
-            selected: false,
-          };
-        })
-    );
-    setVolume({
-      min:
-        response.data &&
-        response.data.products.data &&
-        Math.min(
-          ...response.data.products.data.map((item) => parseInt(item.price))
-        ),
-      max:
-        response.data &&
-        response.data.products.data &&
-        Math.max(
-          ...response.data.products.data.map((item) => parseInt(item.price))
-        ),
-    });
+    setProducts(response.data && response.data);
+    // setNxtPage(response.data && response.data.products.next_page_url);
+    // setCategoriesFilter(
+    //   response.data &&
+    //     response.data.categories.length > 0 &&
+    //     response.data.categories.map((item) => {
+    //       return {
+    //         ...item,
+    //         selected: false,
+    //       };
+    //     })
+    // );
+    // setVariantsFilter(
+    //   response.data &&
+    //     response.data.activeVariants.length > 0 &&
+    //     response.data.activeVariants.map((varient) => {
+    //       return {
+    //         ...varient,
+    //         active_variant_items:
+    //           varient.active_variant_items &&
+    //           varient.active_variant_items.length > 0 &&
+    //           varient.active_variant_items.map((variant_item) => {
+    //             return {
+    //               ...variant_item,
+    //               selected: false,
+    //             };
+    //           }),
+    //       };
+    //     })
+    // );
+    // setBrands(
+    //   response.data &&
+    //     response.data.brands.length > 0 &&
+    //     response.data.brands.map((item) => {
+    //       return {
+    //         ...item,
+    //         selected: false,
+    //       };
+    //     })
+    // );
+    // setVolume({
+    //   min:
+    //     response.data &&
+    //     response.data &&
+    //     Math.min(...response.data.map((item) => parseInt(item.price))),
+    //   max:
+    //     response.data &&
+    //     response.data &&
+    //     Math.max(...response.data.map((item) => parseInt(item.price))),
+    // });
   }, [response.data]);
-  useEffect(() => {
-    if (response.data) {
-      const min =
-        response.data &&
-        Math.min(
-          ...response.data.products.data.map((item) => parseInt(item.price))
-        );
-      const max =
-        response.data &&
-        Math.max(
-          ...response.data.products.data.map((item) => parseInt(item.price))
-        );
-      const check =
-        selectedVarientFilterItem.length > 0 ||
-        selectedCategoryFilterItem.length > 0 ||
-        selectedBrandsFilterItem.length > 0 ||
-        (volume.min && volume.min !== min) ||
-        (volume.max && volume.max !== max);
-      if (check) {
-        const brandsQuery =
-          selectedBrandsFilterItem.length > 0
-            ? selectedBrandsFilterItem.map((value) => {
-                return `brands[]=${value}`;
-              })
-            : [];
-        const brandString =
-          brandsQuery.length > 0
-            ? brandsQuery.map((value) => value + "&").join("")
-            : "";
+  // useEffect(() => {
+  //   if (response.data) {
+  //     const min =
+  //       response.data &&
+  //       Math.min(...response.data.map((item) => parseInt(item.price)));
+  //     const max =
+  //       response.data &&
+  //       Math.max(...response.data.map((item) => parseInt(item.price)));
+  //     const check =
+  //       selectedVarientFilterItem.length > 0 ||
+  //       selectedCategoryFilterItem.length > 0 ||
+  //       selectedBrandsFilterItem.length > 0 ||
+  //       (volume.min && volume.min !== min) ||
+  //       (volume.max && volume.max !== max);
+  //     if (check) {
+  //       const brandsQuery =
+  //         selectedBrandsFilterItem.length > 0
+  //           ? selectedBrandsFilterItem.map((value) => {
+  //               return `brands[]=${value}`;
+  //             })
+  //           : [];
+  //       const brandString =
+  //         brandsQuery.length > 0
+  //           ? brandsQuery.map((value) => value + "&").join("")
+  //           : "";
 
-        const categoryQuery =
-          selectedCategoryFilterItem.length > 0
-            ? selectedCategoryFilterItem.map((value) => {
-                return `categories[]=${value}`;
-              })
-            : [];
-        const categoryString =
-          categoryQuery.length > 0
-            ? categoryQuery.map((value) => value + "&").join("")
-            : "";
+  //       const categoryQuery =
+  //         selectedCategoryFilterItem.length > 0
+  //           ? selectedCategoryFilterItem.map((value) => {
+  //               return `categories[]=${value}`;
+  //             })
+  //           : [];
+  //       const categoryString =
+  //         categoryQuery.length > 0
+  //           ? categoryQuery.map((value) => value + "&").join("")
+  //           : "";
 
-        const variantQuery =
-          selectedVarientFilterItem.length > 0
-            ? selectedVarientFilterItem.map((value) => {
-                return `variantItems[]=${value}`;
-              })
-            : [];
-        const variantString =
-          variantQuery.length > 0
-            ? variantQuery.map((value) => value + "&").join("")
-            : "";
-        axios
-          .get(
-            `${process.env.NEXT_PUBLIC_BASE_URL}api/search-product?${
-              brandString && brandString
-            }${categoryString && categoryString}${
-              variantString && variantString
-            }min_price=${volume.min}&max_price=${volume.max}${
-              sellerInfo ? `&shop_name=${sellerInfo.seller.slug}` : ""
-            }`
-          )
-          .then((res) => {
-            res.data && res.data.products.data.length > 0
-              ? setProducts(res.data.products.data)
-              : setProducts(response.data.products.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        setProducts(response.data.products.data);
-      }
-    } else {
-      return;
-    }
-  }, [
-    selectedVarientFilterItem,
-    selectedCategoryFilterItem,
-    selectedBrandsFilterItem,
-    volume,
-    response.data,
-  ]);
-  // const shopStatus = (startTime, endTime) => {
-  //   const openTime = startTime;
-  //   const closeTime = endTime;
-  //   const getOpen = openTime.split(":");
-  //   const getClose = closeTime.split(":");
-  //   const opening = new Date();
-  //   opening.setHours(getOpen[0], getOpen[1]);
-  //   const getOpeningTime = opening.getTime();
-  //   const closing = new Date();
-  //   closing.setHours(getClose[0], getClose[1]);
-  //   const getClosingTimg = closing.getTime();
-  //   const currentTime = new Date().getTime();
-  //   if (getOpeningTime < currentTime && getClosingTimg > currentTime) {
-  //     return "Store Open";
+  //       const variantQuery =
+  //         selectedVarientFilterItem.length > 0
+  //           ? selectedVarientFilterItem.map((value) => {
+  //               return `variantItems[]=${value}`;
+  //             })
+  //           : [];
+  //       const variantString =
+  //         variantQuery.length > 0
+  //           ? variantQuery.map((value) => value + "&").join("")
+  //           : "";
+  //       axios
+  //         .get(
+  //           `${process.env.NEXT_PUBLIC_BASE_URL}api/search-product?${
+  //             brandString && brandString
+  //           }${categoryString && categoryString}${
+  //             variantString && variantString
+  //           }min_price=${volume.min}&max_price=${volume.max}${
+  //             sellerInfo ? `&shop_name=${sellerInfo.seller.slug}` : ""
+  //           }`
+  //         )
+  //         .then((res) => {
+  //           res.data && res.data.length > 0
+  //             ? setProducts(res.data)
+  //             : setProducts(response.data);
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     } else {
+  //       setProducts(response.data);
+  //     }
   //   } else {
-  //     return "Store Close";
+  //     return;
   //   }
-  // };
+  // }, [
+  //   selectedVarientFilterItem,
+  //   selectedCategoryFilterItem,
+  //   selectedBrandsFilterItem,
+  //   volume,
+  //   response.data,
+  // ]);
+  console.log(response, "response");
   const nextPageHandler = async () => {
     setLoading(true);
     if (nxtPage) {
@@ -299,15 +275,15 @@ export default function AllProductPage({ response, sellerInfo }) {
         .then((res) => {
           setLoading(false);
           if (res.data) {
-            if (res.data.products.data.length > 0) {
-              res.data.products.data.map((item) => {
+            if (res.data.length > 0) {
+              res.data.map((item) => {
                 setProducts((prev) => [...prev, item]);
               });
               setNxtPage(res.data.products.next_page_url);
             }
           }
 
-          // res.data && res.data.products.data.length > 0;
+          // res.data && res.data.length > 0;
           // setNxtPage(response.data && response.data.products.next_page_url);
           console.log(res);
         })
@@ -327,7 +303,7 @@ export default function AllProductPage({ response, sellerInfo }) {
     <>
       <Layout>
         <div className="products-page-wrapper w-full">
-          <div className="container-x mx-auto">
+          <div className="container mx-auto">
             {sellerInfo && (
               <div
                 data-aos="fade-right"
@@ -492,22 +468,18 @@ export default function AllProductPage({ response, sellerInfo }) {
                   categoryHandler={categoryHandler}
                   brandsHandler={brandsHandler}
                   volume={volume}
-                  priceMax={
-                    response.data &&
-                    Math.max(
-                      ...response.data.products.data.map((item) =>
-                        parseInt(item.price)
-                      )
-                    )
-                  }
-                  priceMin={
-                    response.data &&
-                    Math.min(
-                      ...response.data.products.data.map((item) =>
-                        parseInt(item.price)
-                      )
-                    )
-                  }
+                  // priceMax={
+                  //   response.data &&
+                  //   Math.max(
+                  //     ...response.data.map((item) => parseInt(item.price))
+                  //   )
+                  // }
+                  // priceMin={
+                  //   response.data &&
+                  //   Math.min(
+                  //     ...response.data.map((item) => parseInt(item.price))
+                  //   )
+                  // }
                   volumeHandler={(value) => volumeHandler(value)}
                   className="mb-[30px]"
                   variantsFilter={variantsFilter}
@@ -594,7 +566,7 @@ export default function AllProductPage({ response, sellerInfo }) {
               </div>
 
               <div className="flex-1">
-                {response.data && response.data.products.data.length > 0 ? (
+                {response.data && response.data.length > 0 ? (
                   <div className="w-full">
                     <div className="products-sorting w-full bg-white md:h-[70px] flex md:flex-row flex-col md:space-y-0 space-y-5 md:justify-between md:items-center p-[30px] mb-[40px]">
                       <div>
@@ -604,9 +576,8 @@ export default function AllProductPage({ response, sellerInfo }) {
                             {ServeLangItem()?.Showing}
                           </span>{" "}
                           1–
-                          {response.data.products.data.length}{" "}
-                          {ServeLangItem()?.of} {response.data.products.total}{" "}
-                          {ServeLangItem()?.results}
+                          {response.data.length} {ServeLangItem()?.of}{" "}
+                          {response.data.length} {ServeLangItem()?.results}
                         </p>
                       </div>
                       <div className="flex space-x-3 items-center">

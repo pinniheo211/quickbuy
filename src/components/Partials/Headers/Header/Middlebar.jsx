@@ -23,8 +23,8 @@ export default function Middlebar({ className, settings }) {
   const [auth, setAuth] = useState(null);
   const { compareProducts } = useSelector((state) => state.compareProducts);
   useEffect(() => {
-    if(getLoginContexts.loginPopup===false){
-      setAuth(()=>JSON.parse(localStorage.getItem("auth")));
+    if (getLoginContexts.loginPopup === false) {
+      setAuth(() => JSON.parse(localStorage.getItem("auth")));
     }
   }, [getLoginContexts.loginPopup]);
   const profilehandler = () => {
@@ -46,7 +46,7 @@ export default function Middlebar({ className, settings }) {
   }, [cart]);
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>
-      <div className="container-x mx-auto h-full">
+      <div className="container mx-auto h-full">
         <div className="relative h-full">
           <div className="flex justify-between items-center h-full">
             <div className="relative">

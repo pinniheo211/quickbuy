@@ -1,10 +1,10 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Layout from "../../Partials/Layout";
-import Image from "next/image";
 import { useSelector } from "react-redux";
-import VerifyWidget from "./VerifyWidget";
+import Layout from "../../Partials/Layout";
 import SignupWidget from "./SignupWidget";
+import VerifyWidget from "./VerifyWidget";
 export default function Signup() {
   const { websiteSetup } = useSelector((state) => state.websiteSetup);
   const [verify, setVerify] = useState(false);
@@ -28,7 +28,7 @@ export default function Signup() {
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="login-page-wrapper w-full py-10">
-        <div className="container-x mx-auto">
+        <div className="container mx-auto">
           <div className="lg:flex items-center relative w-full lg:min-h-[700px]">
             {verify ? (
               <div className="lg:w-[572px] w-full lg:h-[700px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">

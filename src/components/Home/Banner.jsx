@@ -1,275 +1,131 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { useEffect } from "react";
-import settings from "../../../utils/settings";
+import { useEffect, useState } from "react";
 import ShopNowBtn from "../Helpers/Buttons/ShopNowBtn";
-import SimpleSlider from "../Helpers/SliderCom";
-export default function Banner({
-  className,
-  images = [],
-  sidebarImgOne,
-  sidebarImgTwo,
-  services = [],
-}) {
-  const settingBanner = {
-    infinite: true,
-    dots: true,
-    autoplay: false,
-    arrows: false,
-    fade: true,
-  };
-  const { text_direction } = settings();
-  useEffect(() => {
-    const getSliderInitElement = document.querySelector(
-      ".slider-wrapper .slick-slider.slick-initialized"
-    );
-    getSliderInitElement.setAttribute("dir", `${text_direction}`);
-  }, [text_direction]);
+import ArrowLeftIcon from "../Helpers/icons/ArrowLeft";
+import ArrowRightIcon from "../Helpers/icons/ArrowRight";
+import { BANNER_DUMMY } from "./helper";
 
+const Banner = () => {
+  const [windowWidth, setWindowWidth] = useState(0);
+  const handleResize = () => setWindowWidth(window.innerWidth);
+  useEffect(() => {
+    const init = async () => {
+      const { Carousel, initTE } = await import("tw-elements");
+      initTE({ Carousel }, { allowReinits: true });
+    };
+    init();
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
-    <>
-      <div className={`w-full ${className || ""}`}>
-        <div className="container-x mx-auto">
-          <div className="main-wrapper w-full">
-            <div className="banner-card xl:flex xl:space-x-[30px] rtl:space-x-0 xl:h-[600px]  mb-[30px] ">
-              <div
-                data-aos="fade-right"
-                className="xl:w-[740px] rtl:ml-[30px] ltr:ml-0 w-full xl:h-full md:h-[500px] h-[220px] xl:mb-0 mb-2"
-              >
-                <div className="slider-wrapper w-full h-full">
-                  <SimpleSlider settings={settingBanner}>
-                    {images.length > 0 &&
-                      images.map((item, i) => (
-                        <div key={i} className="item w-full h-full group">
-                          <div
-                            style={{
-                              backgroundImage: `url(${
-                              item.image
-                              })`,
-                              backgroundSize: "cover",
-                              backgroundRepeat: "no-repeat",
-                            }}
-                            className="flex w-full max-w-full h-full relative items-center rtl:pr-[30px] ltr:pl-[30px]"
-                          >
-                            <div>
-                              <div className=" md:w-[112px] w-[100px] shadow md:h-[25px] h-[18px] flex items-center justify-center  bg-white rounded-full md:mb-[30px] mb-[15px]">
-                                <span className="text-qblack uppercase md:text-xs text-[10px] font-semibold">
-                                  {/* {item.badge} */}123
-                                </span>
-                              </div>
-                              <div className="md:mb-[30px] mb-[15px]">
-                                <p className="md:text-[50px] text-[20px] leading-none text-qblack md:mb-3">
-                                  {item.title}
-                                </p>
-                                <h1 className="md:text-[50px] text-[20px] md:w-[400px] md:leading-[66px] text-qblack font-bold">
-                                  {item.des}
-                                </h1>
-                              </div>
-                              <div className="w-[90px]">
-                                <Link
-                                  href={{
-                                    pathname: "/single-product",
-                                    // query: { slug: item.product_slug },
-                                  }}
-                                  passHref
-                                >
-                                  <a rel="noopener noreferrer">
-                                    <ShopNowBtn />
-                                  </a>
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                  </SimpleSlider>
+    <div
+      className="relative"
+      id="carouselDarkVariant"
+      data-te-carousel-init
+      data-te-ride="carousel"
+    >
+      <div
+        className="absolute inset-x-0 bottom-0 z-[2] mx-[15%] mb-2 md:mb-3 2xl:mb-5 flex list-none justify-center p-0"
+        data-te-carousel-indicators
+      >
+        <button
+          className="mx-[3px] rounded-xl box-content h-2.5 w-10 xl:h-3 xl:w-12 flex-initial cursor-pointer border-transparent bg-gradient-button hover:opacity-100  dark:bg-gradient-button-purple p-0 -indent-[999px] opacity-50 transition-opacity duration-[500ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
+          data-te-target="#carouselDarkVariant"
+          data-te-slide-to="0"
+          data-te-carousel-active
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          className="mx-[3px] rounded-xl box-content h-2.5 w-10 xl:h-3 xl:w-12 flex-initial cursor-pointer border-transparent bg-gradient-button hover:opacity-100  dark:bg-gradient-button-purple p-0 -indent-[999px] opacity-50 transition-opacity duration-[500ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
+          data-te-target="#carouselDarkVariant"
+          data-te-slide-to="1"
+          data-te-carousel-active
+          aria-label="Slide 2"
+        ></button>
+        <button
+          className="mx-[3px] rounded-xl box-content h-2.5 w-10 xl:h-3 xl:w-12 flex-initial cursor-pointer border-transparent bg-gradient-button hover:opacity-100  dark:bg-gradient-button-purple p-0 -indent-[999px] opacity-50 transition-opacity duration-[500ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
+          data-te-target="#carouselDarkVariant"
+          data-te-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+
+      <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
+        {BANNER_DUMMY.map((banner, index) => (
+          <div
+            key={index}
+            data-te-carousel-fade
+            data-te-carousel-item
+            data-te-carousel-active={index === 0 ? true : undefined}
+            className={
+              index === 0
+                ? "relative float-left -mr-[100%] w-full !transform-none opacity-0 transition-opacity duration-[500ms] ease-in-out motion-reduce:transition-none"
+                : "hidden relative float-left -mr-[100%] w-full !transform-none opacity-0 transition-opacity duration-[500ms] ease-in-out motion-reduce:transition-none"
+            }
+          >
+            <div className="absolute w-full h-full flex items-end sm:items-center justify-start pb-9 sm:pb-0">
+              <div className="container">
+                <div className="flex flex-col gap-1 md:gap-2 lg:gap-3 2xl:gap-5 items-center sm:items-start justify-center sm:justify-start w-full sm:w-1/2 md:w-[45%]">
+                  <p className="text-3xl md:text-[44px] lg:text-5xl xl:text-6xl 2xl:text-7xl !leading-tight 2xl:leading-none font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-7 via-primary-8 to-primary-4">
+                    {banner?.title}
+                  </p>
+                  <p className="text-center sm:text-left text-sm md:text-base lg:text-lg pb-1 xl:pb-3 2xl:pb-0 xl:text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary-7 via-primary-8 to-primary-4 font-medium">
+                    {banner?.des}
+                  </p>
+
+                  <Link
+                    href={{
+                      pathname: "/single-product",
+                      query: { slug: 123 },
+                    }}
+                    passHref
+                  >
+                    <a rel="noopener noreferrer">
+                      <ShopNowBtn />
+                    </a>
+                  </Link>
                 </div>
               </div>
-              {/* <div
-                data-aos="fade-left"
-                className="flex-1 flex xl:flex-col flex-row  xl:space-y-[30px] xl:h-full md:h-[350px] h-[150px]"
-              >
-                <div
-                  className="w-full xl:h-1/2 xl:mr-0 mr-2 relative flex items-center group rtl:md:pr-[40px] ltr:md:pl-[40px] rtl:pr-[30] ltr:pl-[30px]"
-                  style={{
-                    backgroundImage: `url(${
-                      process.env.NEXT_PUBLIC_BASE_URL + sidebarImgOne.image
-                    })`,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                  }}
-                >
-                  <div className="flex flex-col justify-between">
-                    <div>
-                      <div className="inline-block md:w-[112px] w-[100px] shadow md:h-[25px] h-[18px] flex items-center justify-center  bg-white rounded-full md:mb-[22px] mb-[15px]">
-                        <span className="text-qblack uppercase md:text-xs text-[10px] font-semibold">
-                          {sidebarImgOne.badge}
-                        </span>
-                      </div>
-                      <div className="md:mb-[30px] mb-2.5">
-                        <p className="md:text-[30px] leading-none text-qblack font-semibold md:mb-3">
-                          {sidebarImgOne.title_one}
-                        </p>
-                        <h1 className="md:text-[30px] md:leading-[40px] text-qblack font-semibold">
-                          {sidebarImgOne.title_two}
-                        </h1>
-                      </div>
-                    </div>
-                    <div className="w-[90px]">
-                      <Link
-                        href={{
-                          pathname: "/products",
-                          query: { category: sidebarImgOne.product_slug },
-                        }}
-                        passHref
-                      >
-                        <a rel="noopener noreferrer">
-                          <div className="cursor-pointer w-full relative  ">
-                            <div className="inline-flex rtl:space-x-reverse  space-x-1.5 items-center relative z-20">
-                              <span className="text-sm text-qblack font-medium leading-[30px]">
-                                {ServeLangItem()?.Shop_Now}
-                              </span>
-                              <span className="leading-[30px]">
-                                <svg
-                                  className={`transform rtl:rotate-180`}
-                                  width="7"
-                                  height="11"
-                                  viewBox="0 0 7 11"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
-                                    x="2.08984"
-                                    y="0.636719"
-                                    width="6.94219"
-                                    height="1.54271"
-                                    transform="rotate(45 2.08984 0.636719)"
-                                    fill="#1D1D1D"
-                                  />
-                                  <rect
-                                    x="7"
-                                    y="5.54492"
-                                    width="6.94219"
-                                    height="1.54271"
-                                    transform="rotate(135 7 5.54492)"
-                                    fill="#1D1D1D"
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                            <div className="w-[82px] transition-all duration-300 ease-in-out group-hover:h-4 h-[0px] bg-qyellow absolute left-0 rtl:right-0 bottom-0 z-10"></div>
-                          </div>
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    backgroundImage: `url(${
-                      process.env.NEXT_PUBLIC_BASE_URL + sidebarImgTwo.image
-                    })`,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                  }}
-                  className="w-full xl:h-1/2 relative flex items-center rtl:md:pr-[40px] ltr:md:pl-[40px] rtl:pr-[30] ltr:pl-[30px] group"
-                >
-                  <div className="flex flex-col justify-between">
-                    <div>
-                      <div className="inline-block md:w-[112px] w-[100px] shadow md:h-[25px] h-[18px] flex items-center justify-center  bg-white rounded-full md:mb-[22px] mb-[15px]">
-                        <span className="text-qblack uppercase md:text-xs text-[10px] font-semibold">
-                          {sidebarImgTwo.badge}
-                        </span>
-                      </div>
-                      <div className="md:mb-[30px] mb-2.5">
-                        <p className="md:text-[30px] leading-none text-qblack font-semibold md:mb-3">
-                          {sidebarImgTwo.title_one}
-                        </p>
-                        <h1 className="md:text-[30px] md:leading-[40px] text-qblack font-semibold">
-                          {sidebarImgTwo.title_two}
-                        </h1>
-                      </div>
-                    </div>
-                    <div className="w-[90px]">
-                      <Link
-                        href={{
-                          pathname: "/products",
-                          query: { category: sidebarImgTwo.product_slug },
-                        }}
-                        passHref
-                      >
-                        <a rel="noopener noreferrer">
-                          <div className="cursor-pointer w-full relative  ">
-                            <div className="inline-flex rtl:space-x-reverse  space-x-1.5 items-center relative z-20">
-                              <span className="text-sm text-qblack font-medium leading-[30px]">
-                                {ServeLangItem()?.Shop_Now}
-                              </span>
-                              <span className="leading-[30px]">
-                                <svg
-                                  className={`transform rtl:rotate-180`}
-                                  width="7"
-                                  height="11"
-                                  viewBox="0 0 7 11"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
-                                    x="2.08984"
-                                    y="0.636719"
-                                    width="6.94219"
-                                    height="1.54271"
-                                    transform="rotate(45 2.08984 0.636719)"
-                                    fill="#1D1D1D"
-                                  />
-                                  <rect
-                                    x="7"
-                                    y="5.54492"
-                                    width="6.94219"
-                                    height="1.54271"
-                                    transform="rotate(135 7 5.54492)"
-                                    fill="#1D1D1D"
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                            <div className="w-[82px] transition-all duration-300 ease-in-out group-hover:h-4 h-[0px] bg-qyellow absolute left-0 rtl:right-0 bottom-0 z-10"></div>
-                          </div>
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
             </div>
-            {/* <div
-              data-aos="fade-up"
-              className="best-services w-full bg-white flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10"
-            >
-              {services.map((service) => (
-                <div key={service.id} className="item">
-                  <div className="flex space-x-5 rtl:space-x-reverse items-center">
-                    <div>
-                      <span className="w-10 h-10 text-qyellow">
-                        <FontAwesomeCom
-                          className="w-8 h-8"
-                          icon={service.icon}
-                        />
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-black text-[15px] font-700 tracking-wide mb-1">
-                        {service.title}
-                      </p>
-                      <p className="text-sm text-qgray line-clamp-1">
-                        {service.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div> */}
+            <img
+              src={windowWidth > 451 ? banner?.img : banner.imgMobile}
+              alt={`Banner ${index}`}
+            />
           </div>
-        </div>
+        ))}
       </div>
-    </>
+
+      <button
+        className="absolute bottom-0 border-transparent left-5 top-0 z-[1] w-[10%] flex items-center justify-center border-0 bg-none p-0 text-center text-black transition-all duration-300"
+        type="button"
+        data-te-target="#carouselDarkVariant"
+        data-te-slide="prev"
+      >
+        <span className="h-8 w-8 lg:w-10 lg:h-10 text-white bg-gradient-button  hover:bg-gradient-button-purple dark:bg-gradient-button-purple p-2 rounded-full">
+          <ArrowLeftIcon />
+        </span>
+        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+          Previous
+        </span>
+      </button>
+      <button
+        className="absolute bottom-0 border-transparent right-5 top-0 z-[1] w-[10%] flex items-center justify-center border-0 bg-none p-0 text-center text-black transition-all duration-300"
+        type="button"
+        data-te-target="#carouselDarkVariant"
+        data-te-slide="next"
+      >
+        <span className="h-8 w-8 lg:w-10 lg:h-10 text-white bg-gradient-button  hover:bg-gradient-button-purple dark:bg-gradient-button-purple p-2 rounded-full">
+          <ArrowRightIcon />
+        </span>
+        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+          Next
+        </span>
+      </button>
+    </div>
   );
-}
+};
+
+export default Banner;

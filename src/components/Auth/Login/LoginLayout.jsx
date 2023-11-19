@@ -1,12 +1,11 @@
-import React from "react";
-import Layout from "../../Partials/Layout";
 import Image from "next/image";
+import Layout from "../../Partials/Layout";
 
 function LoginLayout({ imgThumb, children }) {
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="login-page-wrapper w-full py-10">
-        <div className="container-x mx-auto">
+        <div className="container mx-auto">
           <div className="lg:flex items-center relative">
             <div className="lg:w-[572px] w-full h-[783px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
               {/*login Widget*/}

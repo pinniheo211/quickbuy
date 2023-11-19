@@ -1,20 +1,17 @@
 import Link from "next/link";
-import React,{ useState } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import ServeLangItem from "../../Helpers/ServeLangItem";
 import Compair from "../../Helpers/icons/Compair";
 import ThinLove from "../../Helpers/icons/ThinLove";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import FontAwesomeCom from "../../Helpers/icons/FontAwesomeCom";
-import ServeLangItem from "../../Helpers/ServeLangItem";
 
 export default function Drawer({ className, open, action }) {
   const router = useRouter();
   const [tab, setTab] = useState("category");
   const { websiteSetup } = useSelector((state) => state.websiteSetup);
-  const categoryList = websiteSetup && websiteSetup.payload.productCategories;
-  const customPages = websiteSetup && websiteSetup.payload.customPages;
-  // const mageMenuList = websiteSetup && websiteSetup.payload.megaMenuCategories;
-  // const megaMenuBanner = websiteSetup && websiteSetup.payload.megaMenuBanner;
+  const { category } = useSelector((state) => state.category);
+  const categoryList = category && category.data.rows;
   const [searchKey, setSearchkey] = useState("");
   const searchHandler = () => {
     if (searchKey !== "") {
@@ -29,7 +26,9 @@ export default function Drawer({ className, open, action }) {
   return (
     <>
       <div
-        className={`drawer-wrapper w-full block lg:hidden h-full relative  ${className || ""}`}
+        className={`drawer-wrapper w-full block lg:hidden h-full relative  ${
+          className || ""
+        }`}
       >
         {open && (
           <div
@@ -150,21 +149,21 @@ export default function Drawer({ className, open, action }) {
                       <Link
                         href={{
                           pathname: "/products",
-                          query: { category: item.slug },
+                          query: { category: item.category_id },
                         }}
                       >
                         <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
                           <div className="flex items-center space-x-6">
-                            <span>
+                            {/* <span>
                               <span>
                                 <FontAwesomeCom
                                   className="w-4 h-4"
                                   icon={item.icon}
                                 />
                               </span>
-                            </span>
+                            </span> */}
                             <span className="text-sm font-400 capitalize">
-                              {item.name}
+                              {item.category_name}
                             </span>
                           </div>
                           <div>
@@ -205,250 +204,13 @@ export default function Drawer({ className, open, action }) {
             <div className="menu-item mt-5 w-full">
               <ul className="categories-list">
                 <li className="category-item">
-                  <Link href="#">
+                  <Link href="/">
+                    {/* <Link href="/privacy-policy"> */}
                     <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
                       <div className="flex items-center space-x-6">
-                        <span className="text-sm font-400 capitalize">{ServeLangItem()?.Pages}</span>
-                      </div>
-                      <div>
-                        <span>
-                          <svg
-                            width="6"
-                            height="9"
-                            viewBox="0 0 6 9"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <rect
-                              x="1.49805"
-                              y="0.818359"
-                              width="5.78538"
-                              height="1.28564"
-                              transform="rotate(45 1.49805 0.818359)"
-                              fill="#1D1D1D"
-                            />
-                            <rect
-                              x="5.58984"
-                              y="4.90918"
-                              width="5.78538"
-                              height="1.28564"
-                              transform="rotate(135 5.58984 4.90918)"
-                              fill="#1D1D1D"
-                            />
-                          </svg>
+                        <span className="text-sm font-400 capitalize">
+                          Products Packages
                         </span>
-                      </div>
-                    </div>
-                  </Link>
-                  <ul className="submenu-list ml-5">
-                    <li className="category-item">
-                      <Link href="/privacy-policy">
-                        <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
-                          <div className="flex items-center space-x-6">
-                            <span className="text-sm font-400 capitalize">
-                              {ServeLangItem()?.Privacy_Policy}
-                            </span>
-                          </div>
-                          <div>
-                            <span>
-                              <svg
-                                width="6"
-                                height="9"
-                                viewBox="0 0 6 9"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <rect
-                                  x="1.49805"
-                                  y="0.818359"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(45 1.49805 0.818359)"
-                                  fill="#1D1D1D"
-                                />
-                                <rect
-                                  x="5.58984"
-                                  y="4.90918"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(135 5.58984 4.90918)"
-                                  fill="#1D1D1D"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                    <li className="category-item">
-                      <Link href="/faq">
-                        <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
-                          <div className="flex items-center space-x-6">
-                            <span className="text-sm font-400 capitalize">{ServeLangItem()?.FAQ}</span>
-                          </div>
-                          <div>
-                            <span>
-                              <svg
-                                width="6"
-                                height="9"
-                                viewBox="0 0 6 9"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <rect
-                                  x="1.49805"
-                                  y="0.818359"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(45 1.49805 0.818359)"
-                                  fill="#1D1D1D"
-                                />
-                                <rect
-                                  x="5.58984"
-                                  y="4.90918"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(135 5.58984 4.90918)"
-                                  fill="#1D1D1D"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                    <li className="category-item">
-                      <Link href="/terms-condition">
-                        <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
-                          <div className="flex items-center space-x-6">
-                            <span className="text-sm font-400 capitalize">
-                              {ServeLangItem()?.Term_and_Conditions}
-                            </span>
-                          </div>
-                          <div>
-                            <span>
-                              <svg
-                                width="6"
-                                height="9"
-                                viewBox="0 0 6 9"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <rect
-                                  x="1.49805"
-                                  y="0.818359"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(45 1.49805 0.818359)"
-                                  fill="#1D1D1D"
-                                />
-                                <rect
-                                  x="5.58984"
-                                  y="4.90918"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(135 5.58984 4.90918)"
-                                  fill="#1D1D1D"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                    <li className="category-item">
-                      <Link href="/seller-terms-condition">
-                        <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qgreen transition-all duration-300 ease-in-out cursor-pointer">
-                          <div className="flex items-center space-x-6">
-                            <span className="text-sm font-400 capitalize capitalize ">
-                              {ServeLangItem()?.Seller_terms_and_conditions}
-                            </span>
-                          </div>
-                          <div>
-                            <span>
-                              <svg
-                                  width="6"
-                                  height="9"
-                                  viewBox="0 0 6 9"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <rect
-                                    x="1.49805"
-                                    y="0.818359"
-                                    width="5.78538"
-                                    height="1.28564"
-                                    transform="rotate(45 1.49805 0.818359)"
-                                    fill="#1D1D1D"
-                                />
-                                <rect
-                                    x="5.58984"
-                                    y="4.90918"
-                                    width="5.78538"
-                                    height="1.28564"
-                                    transform="rotate(135 5.58984 4.90918)"
-                                    fill="#1D1D1D"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                    {customPages &&
-                        customPages.length > 0 &&
-                        customPages.map((item, i) => (
-                            // eslint-disable-next-line react/jsx-key
-                            <React.Fragment key={i}>
-                              <li className="category-item">
-                                <Link href={`/pages?custom=${item.slug}`} passHref>
-                                  <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
-                                    <div className="flex items-center space-x-6">
-                                  <span className="text-sm font-400 capitalize capitalize ">
-                                    {item.page_name}
-                                  </span>
-                                    </div>
-                                    <div>
-                                  <span>
-                                    <svg
-                                        width="6"
-                                        height="9"
-                                        viewBox="0 0 6 9"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <rect
-                                          x="1.49805"
-                                          y="0.818359"
-                                          width="5.78538"
-                                          height="1.28564"
-                                          transform="rotate(45 1.49805 0.818359)"
-                                          fill="#1D1D1D"
-                                      />
-                                      <rect
-                                          x="5.58984"
-                                          y="4.90918"
-                                          width="5.78538"
-                                          height="1.28564"
-                                          transform="rotate(135 5.58984 4.90918)"
-                                          fill="#1D1D1D"
-                                      />
-                                    </svg>
-                                  </span>
-                                    </div>
-                                  </div>
-                                </Link>
-                              </li>
-                            </React.Fragment>
-                        ))}
-                  </ul>
-                </li>
-
-                <li className="category-item">
-                  <Link href="/about">
-                    <div className="flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
-                      <div className="flex items-center space-x-6">
-                        <span className="text-sm font-400 capitalize">{ServeLangItem()?.About}</span>
                       </div>
                       <div>
                         <span>
@@ -482,10 +244,13 @@ export default function Drawer({ className, open, action }) {
                   </Link>
                 </li>
                 <li className="category-item">
-                  <Link href="/Blogs">
-                    <div className="flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
+                  <Link href="/">
+                    {/* <Link href="/privacy-policy"> */}
+                    <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
                       <div className="flex items-center space-x-6">
-                        <span className="text-sm font-400 capitalize">{ServeLangItem()?.blogs}</span>
+                        <span className="text-sm font-400 capitalize">
+                          Best Seller
+                        </span>
                       </div>
                       <div>
                         <span>
@@ -519,10 +284,133 @@ export default function Drawer({ className, open, action }) {
                   </Link>
                 </li>
                 <li className="category-item">
-                  <Link href="/contact">
+                  <Link href="/">
+                    {/* <Link href="/privacy-policy"> */}
+                    <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
+                      <div className="flex items-center space-x-6">
+                        <span className="text-sm font-400 capitalize">
+                          {ServeLangItem()?.Privacy_Policy}
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          <svg
+                            width="6"
+                            height="9"
+                            viewBox="0 0 6 9"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              x="1.49805"
+                              y="0.818359"
+                              width="5.78538"
+                              height="1.28564"
+                              transform="rotate(45 1.49805 0.818359)"
+                              fill="#1D1D1D"
+                            />
+                            <rect
+                              x="5.58984"
+                              y="4.90918"
+                              width="5.78538"
+                              height="1.28564"
+                              transform="rotate(135 5.58984 4.90918)"
+                              fill="#1D1D1D"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="category-item">
+                  <Link href="/">
+                    {/* <Link href="/about"> */}
                     <div className="flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
                       <div className="flex items-center space-x-6">
-                        <span className="text-sm font-400 capitalize">Contact</span>
+                        <span className="text-sm font-400 capitalize">
+                          {ServeLangItem()?.About}
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          <svg
+                            width="6"
+                            height="9"
+                            viewBox="0 0 6 9"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              x="1.49805"
+                              y="0.818359"
+                              width="5.78538"
+                              height="1.28564"
+                              transform="rotate(45 1.49805 0.818359)"
+                              fill="#1D1D1D"
+                            />
+                            <rect
+                              x="5.58984"
+                              y="4.90918"
+                              width="5.78538"
+                              height="1.28564"
+                              transform="rotate(135 5.58984 4.90918)"
+                              fill="#1D1D1D"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="category-item">
+                  <Link href="/">
+                    {/* <Link href="/Blogs"> */}
+                    <div className="flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
+                      <div className="flex items-center space-x-6">
+                        <span className="text-sm font-400 capitalize">
+                          {ServeLangItem()?.blogs}
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          <svg
+                            width="6"
+                            height="9"
+                            viewBox="0 0 6 9"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              x="1.49805"
+                              y="0.818359"
+                              width="5.78538"
+                              height="1.28564"
+                              transform="rotate(45 1.49805 0.818359)"
+                              fill="#1D1D1D"
+                            />
+                            <rect
+                              x="5.58984"
+                              y="4.90918"
+                              width="5.78538"
+                              height="1.28564"
+                              transform="rotate(135 5.58984 4.90918)"
+                              fill="#1D1D1D"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="category-item">
+                  <Link href="/">
+                    {/* <Link href="/contact"> */}
+                    <div className="flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
+                      <div className="flex items-center space-x-6">
+                        <span className="text-sm font-400 capitalize">
+                          Contact
+                        </span>
                       </div>
                       <div>
                         <span>

@@ -10,15 +10,15 @@ export default function SectionStyleFour({
 }) {
   const rs = products.map((item) => {
     return {
-      id: item.id,
-      title: item.name,
-      slug: item.slug,
-      image: process.env.NEXT_PUBLIC_BASE_URL + item.thumb_image,
-      price: item.price,
-      offer_price: item.offer_price,
+      id: item.product_id,
+      title: item.product_name,
+      slug: item.product_id,
+      image: item.product_image,
+      price: item.product_price,
+      offer_price: item.product_price_sale,
       campaingn_product: null,
-      review: parseInt(item.averageRating),
-      variants: item.active_variants,
+      review: parseInt(item.product_rating),
+      variants: [],
     };
   });
   return (

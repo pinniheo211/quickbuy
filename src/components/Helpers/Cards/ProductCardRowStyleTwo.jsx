@@ -1,15 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import settings from "../../../../utils/settings";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import auth from "../../../../utils/auth";
-import apiRequest from "../../../../utils/apiRequest";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import apiRequest from "../../../../utils/apiRequest";
+import auth from "../../../../utils/auth";
 import { fetchCart } from "../../../store/Cart";
 import CheckProductIsExistsInFlashSale from "../../Shared/CheckProductIsExistsInFlashSale";
 import ServeLangItem from "../ServeLangItem";
+import Star from "../icons/Star";
 
 const Redirect = () => {
   return (
@@ -30,28 +29,12 @@ export default function ProductCardRowStyleTwo({ className, datas }) {
   const router = useRouter();
   const dispatch = useDispatch();
   //cart
-  const varients = datas && datas.variants.length > 0 && datas.variants;
-  const [getFirstVarients, setFirstVarients] = useState(
-    varients && varients.map((v) => v.active_variant_items[0])
-  );
-  const [price, setPrice] = useState(null);
-  const [offerPrice, setOffer] = useState(null);
   const addToCart = (id) => {
     if (auth()) {
       const data = {
         id: id,
         token: auth() && auth().access_token,
         quantity: 1,
-        variants:
-          getFirstVarients &&
-          getFirstVarients.length > 0 &&
-          getFirstVarients.map((v) =>
-            v ? parseInt(v.product_variant_id) : null
-          ),
-        variantItems:
-          getFirstVarients &&
-          getFirstVarients.length > 0 &&
-          getFirstVarients.map((v) => (v ? v.id : null)),
       };
       if (varients) {
         const variantQuery = data.variants.map((value, index) => {
@@ -101,48 +84,7 @@ export default function ProductCardRowStyleTwo({ className, datas }) {
       router.push("/login");
     }
   };
-  useEffect(() => {
-    if (varients) {
-      const prices = varients.map((v) =>
-        v.active_variant_items.length > 0 && v.active_variant_items[0].price
-          ? v.active_variant_items[0].price
-          : 0
-      );
 
-      if (datas.offer_price) {
-        const sumOfferPrice = parseFloat(
-          prices.reduce((prev, curr) => parseInt(prev) + parseInt(curr), 0) +
-            parseFloat(datas.offer_price)
-        );
-        setPrice(datas.price);
-        setOffer(sumOfferPrice);
-      } else {
-        const sumPrice = parseFloat(
-          prices.reduce((prev, curr) => parseInt(prev) + parseInt(curr), 0) +
-            parseFloat(datas.price)
-        );
-        setPrice(sumPrice);
-      }
-    } else {
-      setPrice(datas && datas.price);
-      setOffer(datas && datas.offer_price);
-    }
-  }, [datas, varients]);
-  const { currency_icon } = settings();
-  const { websiteSetup } = useSelector((state) => state.websiteSetup);
-  const [isProductInFlashSale, setData] = useState(null);
-  useEffect(() => {
-    if (websiteSetup) {
-      const getId = websiteSetup.payload.flashSaleProducts.find(
-        (item) => parseInt(item.product_id) === parseInt(datas.id)
-      );
-      if (getId) {
-        setData(true);
-      } else {
-        setData(false);
-      }
-    }
-  }, [websiteSetup]);
   return (
     <div
       data-aos="fade-up"
@@ -173,39 +115,52 @@ export default function ProductCardRowStyleTwo({ className, datas }) {
                 </p>
               </a>
             </Link>
+            <div className="reviews flex space-x-[1px] mb-3">
+              {Array.from(Array(datas.review), () => (
+                <span key={datas.review + Math.random()}>
+                  <Star />
+                </span>
+              ))}
+              {datas.review < 5 && (
+                <>
+                  {Array.from(Array(5 - datas.review), () => (
+                    <span
+                      key={datas.review + Math.random()}
+                      className="text-gray-500"
+                    >
+                      <Star defaultValue={false} />
+                    </span>
+                  ))}
+                </>
+              )}
+            </div>
 
             <p className="price">
               <span
                 suppressHydrationWarning
                 className={`main-price  font-600 text-[18px] ${
-                  offerPrice ? "line-through text-qgray" : "text-qred"
+                  datas?.offer_price ? "line-through text-qgray" : "text-qred"
                 }`}
               >
-                {offerPrice ? (
-                  <span>{currency_icon && currency_icon + price}</span>
+                {datas?.offer_price ? (
+                  <span>${datas?.price}</span>
                 ) : (
                   <>
-                    {isProductInFlashSale && (
-                      <span className="line-through text-qgray font-500 text-base mr-2">
-                        {currency_icon &&
-                          currency_icon + parseFloat(price).toFixed(2)}
-                      </span>
-                    )}
                     <CheckProductIsExistsInFlashSale
                       id={datas.id}
-                      price={price}
+                      price={datas?.price}
                     />
                   </>
                 )}
               </span>
-              {offerPrice && (
+              {datas?.offer_price && (
                 <span
                   suppressHydrationWarning
                   className="offer-price text-qred font-600 text-[18px] ml-2"
                 >
                   <CheckProductIsExistsInFlashSale
                     id={datas.id}
-                    price={offerPrice}
+                    price={datas?.offer_price}
                   />
                 </span>
               )}

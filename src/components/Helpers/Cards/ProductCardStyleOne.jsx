@@ -1,24 +1,13 @@
-import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import apiRequest from "../../../../utils/apiRequest";
-import auth from "../../../../utils/auth";
-import settings from "../../../../utils/settings";
-import { fetchCart } from "../../../store/Cart";
-import { fetchCompareProducts } from "../../../store/compareProduct";
-import { fetchWishlist } from "../../../store/wishlistData";
+import LoginContext from "../../Contexts/LoginContext";
 import CheckProductIsExistsInFlashSale from "../../Shared/CheckProductIsExistsInFlashSale";
-import ProductView from "../../SingleProductPage/ProductView";
-import Compair from "../icons/Compair";
-import QuickViewIco from "../icons/QuickViewIco";
+import ServeLangItem from "../ServeLangItem";
 import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
-import Image from "next/image";
-import ServeLangItem from "../ServeLangItem";
-import LoginContext from "../../Contexts/LoginContext";
 
 const Redirect = () => {
   return (
@@ -38,10 +27,10 @@ const Redirect = () => {
 export default function ProductCardStyleOne({ datas }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { wishlistData } = useSelector((state) => state.wishlistData);
-  const wishlist = wishlistData && wishlistData.wishlists;
-  const wishlisted =
-    wishlist && wishlist.data.find((id) => id.product.id === datas.id);
+  // const { wishlistData } = useSelector((state) => state.wishlistData);
+  // const wishlist = wishlistData && wishlistData.wishlists;
+  // const wishlisted =
+  //   wishlist && wishlist.data.find((id) => id.product.id === datas.id);
   const { websiteSetup } = useSelector((state) => state.websiteSetup);
   const [isProductInFlashSale, setData] = useState(null);
   const loginPopupBoard = useContext(LoginContext);
@@ -57,196 +46,111 @@ export default function ProductCardStyleOne({ datas }) {
       }
     }
   }, [websiteSetup]);
-  const [arWishlist, setArWishlist] = useState(null);
-  const [quickViewModal, setQuickView] = useState(false);
-  const [quickViewData, setQuickViewData] = useState(null);
-  const quickViewHandler = (slug) => {
-    setQuickView(!quickViewModal);
-    if (!quickViewData) {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_BASE_URL}api/product/${slug}`)
-        .then((res) => {
-          setQuickViewData(res.data ? res.data : null);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-  useEffect(() => {
-    if (quickViewModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [quickViewModal]);
+  // const [arWishlist, setArWishlist] = useState(null);
 
-  useEffect(() => {
-    if (wishlisted) {
-      setArWishlist(true);
-    } else {
-      setArWishlist(false);
-    }
-  }, [wishlisted]);
-  const available =
-    (datas.cam_product_sale /
-      (datas.cam_product_available + datas.cam_product_sale)) *
-    100;
+  // useEffect(() => {
+  //   if (wishlisted) {
+  //     setArWishlist(true);
+  //   } else {
+  //     setArWishlist(false);
+  //   }
+  // }, [wishlisted]);
 
-  const addToWishlist = (id) => {
-    if (auth()) {
-      setArWishlist(true);
-      apiRequest.addToWishlist({ id: id, token: auth().access_token });
-      dispatch(fetchWishlist());
-    } else {
-      loginPopupBoard.handlerPopup(true);
-    }
-  };
-  const removeToWishlist = (id) => {
-    if (auth()) {
-      setArWishlist(false);
-      apiRequest.removeToWishlist({ id: id, token: auth().access_token });
-      dispatch(fetchWishlist());
-    } else {
-      loginPopupBoard.handlerPopup(true);
-    }
-  };
+  // const addToWishlist = (id) => {
+  //   if (auth()) {
+  //     setArWishlist(true);
+  //     apiRequest.addToWishlist({ id: id, token: auth().access_token });
+  //     dispatch(fetchWishlist());
+  //   } else {
+  //     loginPopupBoard.handlerPopup(true);
+  //   }
+  // };
+  // const removeToWishlist = (id) => {
+  //   if (auth()) {
+  //     setArWishlist(false);
+  //     apiRequest.removeToWishlist({ id: id, token: auth().access_token });
+  //     dispatch(fetchWishlist());
+  //   } else {
+  //     loginPopupBoard.handlerPopup(true);
+  //   }
+  // };
   // cart
-  const varients = datas && datas.variants.length > 0 && datas.variants;
-  const [getFirstVarients, setFirstVarients] = useState(
-    varients && varients.map((v) => v.active_variant_items[0])
-  );
-  const [price, setPrice] = useState(null);
-  const [offerPrice, setOffer] = useState(null);
-  const addToCart = (id) => {
-    const data = {
-      id: id,
-      token: auth() && auth().access_token,
-      quantity: 1,
-      variants:
-          getFirstVarients &&
-          getFirstVarients.length > 0 &&
-          getFirstVarients.map((v) =>
-              v ? parseInt(v.product_variant_id) : null
-          ),
-      variantItems:
-          getFirstVarients &&
-          getFirstVarients.length > 0 &&
-          getFirstVarients.map((v) => (v ? v.id : null)),
-    };
-    if (auth()) {
-      if (varients) {
-        const variantQuery = data.variants.map((value, index) => {
-          return value ? `variants[]=${value}` : `variants[]=-1`;
-        });
 
-        const variantString = variantQuery.map((value) => value + "&").join("");
+  // const addToCart = (id) => {
+  //   const data = {
+  //     id: id,
+  //     token: auth() && auth().access_token,
+  //     quantity: 1,
+  //     variants:
+  //       getFirstVarients &&
+  //       getFirstVarients.length > 0 &&
+  //       getFirstVarients.map((v) =>
+  //         v ? parseInt(v.product_variant_id) : null
+  //       ),
+  //     variantItems:
+  //       getFirstVarients &&
+  //       getFirstVarients.length > 0 &&
+  //       getFirstVarients.map((v) => (v ? v.id : null)),
+  //   };
+  //   if (auth()) {
+  //     if (varients) {
+  //       const variantQuery = data.variants.map((value, index) => {
+  //         return value ? `variants[]=${value}` : `variants[]=-1`;
+  //       });
 
-        const itemsQuery = data.variantItems.map((value, index) => {
-          return value ? `items[]=${value}` : `items[]=-1`;
-        });
-        const itemQueryStr = itemsQuery.map((value) => value + "&").join("");
-        const uri = `token=${data.token}&product_id=${data.id}&${variantString}${itemQueryStr}quantity=${data.quantity}`;
-        apiRequest
-          .addToCard(uri)
-          .then((res) =>
-            toast.success(<Redirect />, {
-              autoClose: 5000,
-            })
-          )
-          .catch((err) => {
-            console.log(err);
-            toast.error(
-              err.response &&
-                err.response.data.message &&
-                err.response.data.message
-            );
-          });
-        dispatch(fetchCart());
-      } else {
-        const uri = `token=${data.token}&product_id=${data.id}&quantity=${data.quantity}`;
-        apiRequest
-          .addToCard(uri)
-          .then((res) =>
-            toast.success(<Redirect />, {
-              autoClose: 5000,
-            })
-          )
-          .catch((err) => {
-            console.log(err);
-            toast.error(
-              err.response &&
-                err.response.data.message &&
-                err.response.data.message
-            );
-          });
-        dispatch(fetchCart());
-      }
-    } else {
-      localStorage.setItem("data-hold", JSON.stringify({type:"add-to-cart",...data}));
-      loginPopupBoard.handlerPopup(true);
-    }
-  };
+  //       const variantString = variantQuery.map((value) => value + "&").join("");
 
-  useEffect(() => {
-    if (varients) {
-      const prices = varients.map((v) =>
-        v.active_variant_items.length > 0 && v.active_variant_items[0].price
-          ? v.active_variant_items[0].price
-          : 0
-      );
+  //       const itemsQuery = data.variantItems.map((value, index) => {
+  //         return value ? `items[]=${value}` : `items[]=-1`;
+  //       });
+  //       const itemQueryStr = itemsQuery.map((value) => value + "&").join("");
+  //       const uri = `token=${data.token}&product_id=${data.id}&${variantString}${itemQueryStr}quantity=${data.quantity}`;
+  //       apiRequest
+  //         .addToCard(uri)
+  //         .then((res) =>
+  //           toast.success(<Redirect />, {
+  //             autoClose: 5000,
+  //           })
+  //         )
+  //         .catch((err) => {
+  //           console.log(err);
+  //           toast.error(
+  //             err.response &&
+  //               err.response.data.message &&
+  //               err.response.data.message
+  //           );
+  //         });
+  //       dispatch(fetchCart());
+  //     } else {
+  //       const uri = `token=${data.token}&product_id=${data.id}&quantity=${data.quantity}`;
+  //       apiRequest
+  //         .addToCard(uri)
+  //         .then((res) =>
+  //           toast.success(<Redirect />, {
+  //             autoClose: 5000,
+  //           })
+  //         )
+  //         .catch((err) => {
+  //           console.log(err);
+  //           toast.error(
+  //             err.response &&
+  //               err.response.data.message &&
+  //               err.response.data.message
+  //           );
+  //         });
+  //       dispatch(fetchCart());
+  //     }
+  //   } else {
+  //     localStorage.setItem(
+  //       "data-hold",
+  //       JSON.stringify({ type: "add-to-cart", ...data })
+  //     );
+  //     loginPopupBoard.handlerPopup(true);
+  //   }
+  // };
 
-      if (datas.offer_price) {
-        const sumOfferPrice = parseFloat(
-          prices.reduce((prev, curr) => parseInt(prev) + parseInt(curr), 0) +
-            parseFloat(datas.offer_price)
-        );
-        setPrice(datas.price);
-        setOffer(sumOfferPrice);
-      } else {
-        const sumPrice = parseFloat(
-          prices.reduce((prev, curr) => parseInt(prev) + parseInt(curr), 0) +
-            parseFloat(datas.price)
-        );
-        setPrice(sumPrice);
-      }
-    } else {
-      setPrice(datas && datas.price);
-      setOffer(datas && datas.offer_price);
-    }
-  }, [datas, varients]);
-
-  /*compare product feature
-   * add product for compare method
-   * @params (id,token)
-   * request method is (apiRequest)
-   * */
-  const productCompare = (id) => {
-    if (auth()) {
-      apiRequest
-        .addProductForCompare(id, auth().access_token)
-        .then((res) => {
-          toast.success(res.data && res.data.notification);
-          dispatch(fetchCompareProducts());
-        })
-        .catch((err) => {
-          toast.error(err.response && err.response.data.notification);
-          console.log(err);
-        });
-    } else {
-      loginPopupBoard.handlerPopup(true);
-    }
-  };
-  const { currency_icon } = settings();
   const [imgSrc, setImgSrc] = useState(null);
   const loadImg = (value) => {
-    // const time = 3000;
-    // setTimeout(() => {
-    //   setImgSrc(value);
-    // }, time);
     setImgSrc(value);
   };
   return (
@@ -256,13 +160,7 @@ export default function ProductCardStyleOne({ datas }) {
         style={{ boxShadow: "0px 15px 64px 0px rgba(0, 0, 0, 0.05)" }}
       >
         <div className="product-card-img w-full h-[300px] -mt-2">
-          <div
-            className="w-full h-full relative flex justify-center items-center transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out"
-            // style={{
-            //   background: `url(${datas.image}) no-repeat center`,
-            //   backgroundSize: "contain",
-            // }}
-          >
+          <div className="w-full h-full relative flex justify-center items-center transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out">
             <Image
               layout="fill"
               objectFit="scale-down"
@@ -271,53 +169,13 @@ export default function ProductCardStyleOne({ datas }) {
               onLoadingComplete={() => loadImg(datas.image)}
               className="w-full h-full object-contain"
             />
-            {/* product available progress */}
-            {/*{datas.campaingn_product && (*/}
-            {/*  <>*/}
-            {/*    <div className="px-[30px] absolute left-0 top-3 w-full">*/}
-            {/*      <div className="progress-title flex justify-between ">*/}
-            {/*        <p className="text-xs text-qblack font-400 leading-6">*/}
-            {/*          Prodcuts Available*/}
-            {/*        </p>*/}
-            {/*        <span className="text-sm text-qblack font-600 leading-6">*/}
-            {/*          {datas.cam_product_available}*/}
-            {/*        </span>*/}
-            {/*      </div>*/}
-            {/*      <div className="progress w-full h-[5px] rounded-[22px] bg-primarygray relative overflow-hidden">*/}
-            {/*        <div*/}
-            {/*          style={{*/}
-            {/*            width: `${*/}
-            {/*              datas.campaingn_product ? 100 - available : 0*/}
-            {/*            }%`,*/}
-            {/*          }}*/}
-            {/*          className="h-full absolute left-0 top-0 bg-qyellow"*/}
-            {/*        ></div>*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*  </>*/}
-            {/*)}*/}
-
-            {/* product type */}
-            {/*{datas.product_type && !datas.campaingn_product && (*/}
-            {/*  <div className="product-type absolute right-[14px] top-[17px]">*/}
-            {/*    <span*/}
-            {/*      className={`text-[9px] font-700 leading-none py-[6px] px-3 uppercase text-white rounded-full tracking-wider ${*/}
-            {/*        datas.product_type === "popular"*/}
-            {/*          ? "bg-[#19CC40]"*/}
-            {/*          : "bg-qyellow"*/}
-            {/*      }`}*/}
-            {/*    >*/}
-            {/*      {datas.product_type}*/}
-            {/*    </span>*/}
-            {/*  </div>*/}
-            {/*)}*/}
           </div>
         </div>
         <div className="product-card-details px-[30px] pb-[30px] relative pt-2">
           {/* add to card button */}
           <div className="absolute w-full h-10 px-[30px] left-0 top-40 group-hover:top-[85px] transition-all duration-300 ease-in-out">
             <button
-              onClick={() => addToCart(datas.id)}
+              // onClick={() => addToCart(datas.id)}
               type="button"
               className="yellow-btn group relative w-full h-full flex shadow  justify-center items-center overflow-hidden"
             >
@@ -339,25 +197,27 @@ export default function ProductCardStyleOne({ datas }) {
               <div className="bg-shape w-full h-full absolute  bg-qblack"></div>
             </button>
           </div>
-          <div className="reviews flex space-x-[1px] mb-3">
-            {Array.from(Array(datas.review), () => (
-              <span key={datas.review + Math.random()}>
-                <Star />
-              </span>
-            ))}
-            {datas.review < 5 && (
-              <>
-                {Array.from(Array(5 - datas.review), () => (
-                  <span
-                    key={datas.review + Math.random()}
-                    className="text-gray-500"
-                  >
-                    <Star defaultValue={false} />
-                  </span>
-                ))}
-              </>
-            )}
-          </div>
+          {datas.review && (
+            <div className="reviews flex space-x-[1px] mb-3">
+              {Array.from(Array(datas.review), () => (
+                <span key={datas.review + Math.random()}>
+                  <Star />
+                </span>
+              ))}
+              {datas.review < 5 && (
+                <>
+                  {Array.from(Array(5 - datas.review), () => (
+                    <span
+                      key={datas.review + Math.random()}
+                      className="text-gray-500"
+                    >
+                      <Star defaultValue={false} />
+                    </span>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
 
           <Link
             href={{ pathname: "/single-product", query: { slug: datas.slug } }}
@@ -373,36 +233,35 @@ export default function ProductCardStyleOne({ datas }) {
             <span
               suppressHydrationWarning
               className={`main-price  font-600 text-[18px] ${
-                offerPrice ? "line-through text-qgray" : "text-qred"
+                datas?.offer_price ? "line-through text-qgray" : "text-qred"
               }`}
             >
-              {offerPrice ? (
-                <span>{currency_icon && currency_icon + price}</span>
+              {datas?.offer_price ? (
+                <span>{datas?.price}</span>
               ) : (
                 <>
                   {isProductInFlashSale && (
                     <span
                       className={`line-through text-qgray font-500 text-[16px] mr-2`}
                     >
-                      {currency_icon &&
-                        currency_icon + parseFloat(price).toFixed(2)}
+                      {parseFloat(datas?.price).toFixed(2)}
                     </span>
                   )}
                   <CheckProductIsExistsInFlashSale
                     id={datas.id}
-                    price={price}
+                    price={datas?.price}
                   />
                 </>
               )}
             </span>
-            {offerPrice && (
+            {datas?.offer_price && (
               <span
                 suppressHydrationWarning
                 className="offer-price text-qred font-600 text-[18px] ml-2"
               >
                 <CheckProductIsExistsInFlashSale
                   id={datas.id}
-                  price={offerPrice}
+                  price={datas?.offer_price}
                 />
               </span>
             )}
@@ -410,16 +269,7 @@ export default function ProductCardStyleOne({ datas }) {
         </div>
         {/* quick-access-btns */}
         <div className="quick-access-btns flex flex-col space-y-2">
-          <button
-            className=" absolute group-hover:right-4 -right-10 top-20  transition-all ease-in-out"
-            onClick={() => quickViewHandler(datas.slug)}
-            type="button"
-          >
-            <span className="w-10 h-10 flex justify-center text-black hover:text-white items-center transition-all duration-300 ease-in-out hover:bg-qyellow bg-primarygray rounded">
-              <QuickViewIco className="fill-current" />
-            </span>
-          </button>
-          {!arWishlist ? (
+          {/* {!arWishlist ? (
             <button
               className=" absolute group-hover:right-4 -right-10 top-[120px]  transition-all duration-300 ease-in-out"
               type="button"
@@ -433,70 +283,23 @@ export default function ProductCardStyleOne({ datas }) {
             <button
               className=" absolute group-hover:right-4 -right-10 top-[120px]  transition-all duration-300 ease-in-out"
               type="button"
-              onClick={() => removeToWishlist(wishlisted && wishlisted.id)}
+              // onClick={() => removeToWishlist(wishlisted && wishlisted.id)}
             >
               <span className="w-10 h-10 flex justify-center items-center bg-primarygray rounded">
                 <ThinLove fill={true} />
               </span>
             </button>
-          )}
-
+          )} */}
           <button
-            className=" absolute group-hover:right-4 -right-10 top-[168px]  transition-all duration-500 ease-in-out"
+            className=" absolute group-hover:right-4 -right-10 top-[120px]  transition-all duration-300 ease-in-out"
             type="button"
-            onClick={() => productCompare(datas.id)}
+            // onClick={() => addToWishlist(datas.id)}
           >
-            <span className="w-10 h-10 flex justify-center text-black hover:text-white transition-all duration-300 ease-in-out items-center hover:bg-qyellow bg-primarygray rounded">
-              <Compair />
+            <span className="w-10 h-10 flex text-black hover:text-white justify-center items-center transition-all duration-300 ease-in-out hover:bg-qyellow bg-primarygray rounded">
+              <ThinLove className="fill-current" />
             </span>
           </button>
         </div>
-        {quickViewModal && quickViewData && (
-          <div className="quicke-view-wrapper w-full h-full flex fixed left-0 top-0 justify-center z-50 items-center ">
-            <div
-              onClick={() => setQuickView(!quickViewModal)}
-              className="w-full h-full fixed left-0 right-0 bg-black  bg-opacity-25"
-            ></div>
-            <div
-              data-aos="fade-up"
-              className=" md:mx-10 xl:mt-[100px] rounded w-full bg-white relative lg:py-[40px] pt-[80px] pb-[40px] sm:px-[38px] px-3 md:mt-12 h-full overflow-y-scroll xl:overflow-hidden xl:mt-0 "
-              style={{ zIndex: "999" }}
-            >
-              <div className="w-full h-full overflow-y-scroll overflow-style-none">
-                <ProductView
-                  images={
-                    quickViewData.gellery.length > 0
-                      ? quickViewData.gellery
-                      : []
-                  }
-                  product={quickViewData.product}
-                />
-              </div>
-              <button
-                onClick={() => setQuickView(!quickViewModal)}
-                type="button"
-                className="absolute right-3 top-3"
-              >
-                <span className="text-red-500 w-12 h-12 flex justify-center items-center rounded border border-qred">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-10 h-10"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    ></path>
-                  </svg>
-                </span>
-              </button>
-            </div>
-          </div>
-        )}
       </div>
       <span className="anim bottom"></span>
       <span className="anim right"></span>

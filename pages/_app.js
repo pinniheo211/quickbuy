@@ -5,6 +5,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import TimeAgo from "javascript-time-ago";
+import "tw-elements/dist/css/tw-elements.min.css";
 
 import en from "javascript-time-ago/locale/en.json";
 import ru from "javascript-time-ago/locale/ru.json";

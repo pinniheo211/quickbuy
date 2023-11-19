@@ -8,7 +8,7 @@ export default function ProductsAds({
 }) {
   return (
     <div className={`w-full ${className || ""}`}>
-      <div className="container-x mx-auto">
+      <div className="container mx-auto">
         <div
           className={`${sectionHeight} ${
             ads.length > 1 && ads.length <= 2

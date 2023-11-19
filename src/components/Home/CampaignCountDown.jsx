@@ -1,10 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
-import CountDown from "../Helpers/CountDown";
 import ShopNowBtn from "../Helpers/Buttons/ShopNowBtn";
-import GooglePlay from "../Helpers/icons/GooglePlay";
-import AppleStore from "../Helpers/icons/AppleStore";
+import CountDown from "../Helpers/CountDown";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import AppleStore from "../Helpers/icons/AppleStore";
+import GooglePlay from "../Helpers/icons/GooglePlay";
 
 export default function CampaignCountDown({
   className,
@@ -16,7 +15,7 @@ export default function CampaignCountDown({
   return (
     <div>
       <div className={`w-full lg:h-[460px] ${className || ""}`}>
-        <div className="container-x mx-auto h-full">
+        <div className="container mx-auto h-full">
           <div className="lg:flex xl:space-x-[30px] lg:space-x-5 rtl:space-x-reverse items-center h-full">
             <div
               data-aos="fade-right"

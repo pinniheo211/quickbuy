@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import cart from "./Cart";
+import category from "./category";
+import compareProduct from "./compareProduct";
 import websiteSetup from "./websiteSetup";
 import wishlistData from "./wishlistData";
-import cart from "./Cart";
-import compareProduct from "./compareProduct";
 
 export default configureStore({
   reducer: {
+    category: category,
     websiteSetup: websiteSetup,
     wishlistData: wishlistData,
     cart: cart,

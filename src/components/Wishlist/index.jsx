@@ -1,15 +1,15 @@
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import isAuth from "../../../Middleware/isAuth";
+import apiRequest from "../../../utils/apiRequest";
+import auth from "../../../utils/auth";
+import { fetchWishlist } from "../../store/wishlistData";
 import BreadcrumbCom from "../BreadcrumbCom";
 import EmptyWishlistError from "../EmptyWishlistError";
 import PageTitle from "../Helpers/PageTitle";
-import ProductsTable from "./ProductsTable";
-import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
-import auth from "../../../utils/auth";
-import apiRequest from "../../../utils/apiRequest";
-import { toast } from "react-toastify";
-import { fetchWishlist } from "../../store/wishlistData";
-import isAuth from "../../../Middleware/isAuth";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import ProductsTable from "./ProductsTable";
 
 function Wishlist() {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function Wishlist() {
     <>
       {wishlists && wishlists.data.length === 0 ? (
         <div className="wishlist-page-wrapper w-full">
-          <div className="container-x mx-auto">
+          <div className="container mx-auto">
             <BreadcrumbCom
               paths={[
                 { name: ServeLangItem()?.home, path: "/" },
@@ -54,7 +54,7 @@ function Wishlist() {
             />
           </div>
           <div className="w-full mt-[23px]">
-            <div className="container-x mx-auto">
+            <div className="container mx-auto">
               <ProductsTable
                 products={wishlists && wishlists}
                 className="mb-[30px]"
