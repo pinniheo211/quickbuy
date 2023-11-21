@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import ThinBag from "../../../Helpers/icons/ThinBag";
 import Middlebar from "./Middlebar";
 import Navbar from "./Navbar";
-import TopBar from "./TopBar";
 
 export default function Header({ drawerAction, settings, contact }) {
   const { cart } = useSelector((state) => state.cart);
@@ -16,7 +15,6 @@ export default function Header({ drawerAction, settings, contact }) {
 
   return (
     <header className="header-section-wrapper relative print:hidden">
-      <TopBar contact={contact && contact} className="quomodo-shop-top-bar" />
       <Middlebar
         settings={settings && settings}
         className="quomodo-shop-middle-bar lg:block hidden"

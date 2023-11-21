@@ -20,11 +20,12 @@ module.exports = {
         "gradient-hotitem": "linear-gradient(180deg, #FFEBBF 0%, #FDB4E7 100%)",
         "gradient-button-purple":
           "linear-gradient(90deg, #B900BB 4.81%, #921CF5 93.37%)",
+        qyellow: "linear-gradient(90deg, #B900BB 4.81%, #921CF5 93.37%)",
       },
       colors: {
         primarygray: "#f8f8f8",
         qblack: "#222222",
-        qyellow: "#FFBB38",
+        qyellow: "#B901BB",
         qyellowlow: "#F9F3E7",
         qred: "#EF262C",
         qgray: "#797979",
@@ -42,7 +43,7 @@ module.exports = {
         black: "#011032",
         "black-2": "#02001D",
         green: "#43E353",
-        yellow: "#F1B74F",
+        yellow: "#B901BB",
         white: "#FFFFFF",
         error: "#D32F2F",
         icon: "#D1D0D0",

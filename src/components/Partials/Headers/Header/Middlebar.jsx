@@ -154,7 +154,7 @@ export default function Middlebar({ className, settings }) {
                       <ul className="w-full  flex flex-col space-y-7">
                         <li className="text-base text-qgraytwo">
                           <span>
-                            {ServeLangItem()?.Hi}, {auth && auth.user.name}{" "}
+                            {ServeLangItem()?.Hi}, {auth && auth?.user?.name}{" "}
                           </span>
                         </li>
                         <li className="text-base text-qgraytwo cursor-pointer hover:text-qblack hover:font-semibold">

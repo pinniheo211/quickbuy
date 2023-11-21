@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Layout from "../../Partials/Layout";
 
-function LoginLayout({ imgThumb, children }) {
+function LoginLayout({ children }) {
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="login-page-wrapper w-full py-10">
         <div className="container mx-auto">
           <div className="lg:flex items-center relative">
-            <div className="lg:w-[572px] w-full h-[783px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
-              {/*login Widget*/}
+            <div className="lg:w-[572px] rounded-lg w-full h-[783px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
               {children && children}
             </div>
             <div className="flex-1 lg:flex hidden transform scale-60 xl:scale-100   xl:justify-center ">
@@ -16,14 +15,12 @@ function LoginLayout({ imgThumb, children }) {
                 className="absolute ltr:xl:-right-20 ltr:-right-[138px] rtl::xl:-left-20 rtl:-left-[138px]"
                 style={{ top: "calc(50% - 258px)" }}
               >
-                {imgThumb && (
-                  <Image
-                    width={608}
-                    height={480}
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL + imgThumb}`}
-                    alt="login"
-                  />
-                )}
+                <Image
+                  width={608}
+                  height={480}
+                  src={`/assets/images/bannerAuth.png`}
+                  alt="login"
+                />
               </div>
             </div>
           </div>

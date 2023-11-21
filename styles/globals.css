@@ -198,7 +198,7 @@ body {
   .item {
   opacity: 100%;
 }
-@media (min-width: 320px) {
+@media (min-width: 320px) and (max-width: 1024px) {
   .container {
     max-width: none !important;
   }
@@ -445,35 +445,7 @@ body {
   @apply bg-white hover:bg-qyellow text-qblack;
 }
 /*TODO: ========== home two =============*/
-.home-two .search-btn {
-  @apply bg-qh2-green text-white;
-}
-.home-two
-  :is(
-    .cart-wrappwer,
-    .product-card-style-one-two,
-    .product-row-card-style-one-two
-  )
-  .yellow-btn {
-  @apply bg-qh2-green text-white;
-}
-.home-two
-  .quomodo-shop-middle-bar
-  :is(.compaire > span, .favorite > span, .cart-wrapper .cart > span) {
-  @apply bg-qh2-green text-white;
-}
-.home-two .quomodo-shop-nav-bar.nav-widget-wrapper {
-  @apply bg-qh2-green;
-}
-.home-two .nav-widget-wrapper .nav .nav-wrapper li {
-  @apply text-white;
-}
-.home-two .nav-widget-wrapper .become-seller-btn {
-  @apply text-qblack bg-qyellow;
-}
-.home-two .quomodo-shop-middle-bar .cart-wrapper .cart-wrappwer {
-  @apply border-qh2-green;
-}
+
 :is(.my-categories-home-two, .new-arrivals) .section-title .view-more-btn {
   display: none;
 }

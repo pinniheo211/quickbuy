@@ -41,13 +41,11 @@ export default function Layout({ children, childrenClasses }) {
           drawerAction={() => setDrawer(!drawer)}
         />
         <div
-          className={`w-full min-h-screen  ${
-            childrenClasses || "pt-[30px] pb-[60px]"
-          }`}
+          className={`w-full min-h-screen  ${childrenClasses || "pb-[60px]"}`}
         >
           {children && children}
         </div>
-      <DiscountBanner/>
+        <DiscountBanner />
         <Footer />
       </div>
     </>

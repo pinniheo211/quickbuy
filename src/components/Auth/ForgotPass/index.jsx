@@ -1,14 +1,16 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/dist/client/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { SCHEMA_FORGOT } from "utils/schema";
 import apiRequest from "../../../../utils/apiRequest";
 import InputCom from "../../Helpers/InputCom";
 import LoaderStyleOne from "../../Helpers/Loaders/LoaderStyleOne";
 import ServeLangItem from "../../Helpers/ServeLangItem";
 import Layout from "../../Partials/Layout";
-
 export default function ForgotPass() {
   const { websiteSetup } = useSelector((state) => state.websiteSetup);
   const router = useRouter();
@@ -19,7 +21,6 @@ export default function ForgotPass() {
   const [forgotUser, setForgotUser] = useState(true);
   const [newPass, setNewPass] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState(null);
   const [imgThumb, setImgThumb] = useState(null);
   useEffect(() => {
     if (websiteSetup) {
@@ -36,12 +37,10 @@ export default function ForgotPass() {
         setResetpass(true);
         setForgotUser(false);
         setLoading(false);
-        setErrors(null);
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        setErrors(err.response);
         if (err.response) {
           if (err.response.data.notification) {
             toast.error(err.response.data.notification);
@@ -72,7 +71,6 @@ export default function ForgotPass() {
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        setErrors(err.response);
         if (err.response) {
           if (err.response.data.notification) {
             toast.error(err.response.data.notification);
@@ -84,17 +82,37 @@ export default function ForgotPass() {
         }
       });
   };
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: forgotUser
+      ? { email: "" }
+      : resetPass
+      ? { code: "", password: "", cpassword: "" }
+      : {},
+    resolver: forgotUser
+      ? yupResolver(SCHEMA_FORGOT)
+      : resetPass
+      ? yupResolver(SCHEMA_RESET_PASS)
+      : undefined,
+  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <Layout childrenClasses="pt-0 pb-0">
       <div className="login-page-wrapper w-full py-10">
         <div className="container mx-auto">
           <div className="lg:flex items-center relative">
-            <div className="lg:w-[572px] w-full h-[783px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
+            <div className="lg:w-[572px] rounded-lg w-full h-[783px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
               {forgotUser ? (
                 <div className="w-full">
                   <div className="title-area flex flex-col justify-center items-center relative text-center mb-7">
                     <h1 className="text-[34px] font-bold leading-[74px] text-qblack capitalize">
-                      {ServeLangItem()?.Forgot_password}
+                      Forgot password
                     </h1>
                     <div className="shape -mt-6">
                       <svg
@@ -106,36 +124,51 @@ export default function ForgotPass() {
                       >
                         <path
                           d="M1 28.8027C17.6508 20.3626 63.9476 8.17089 113.509 17.8802C166.729 28.3062 341.329 42.704 353 1"
-                          stroke="#FFBB38"
+                          stroke="#B901BB"
                           strokeWidth="2"
                           strokeLinecap="round"
                         />
                       </svg>
                     </div>
                   </div>
-                  <div className="input-area">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="input-area"
+                  >
                     <div className="input-item mb-5">
-                      <InputCom
-                        placeholder={ServeLangItem()?.Email_Address}
-                        label={ServeLangItem()?.Email_Address + "*"}
-                        name="email"
-                        type="email"
-                        inputClasses="h-[50px]"
-                        inputHandler={(e) => setEmail(e.target.value.trim())}
-                        value={email}
-                      />
+                      <div className="h-full">
+                        <Controller
+                          name="email"
+                          control={control}
+                          render={({ field }) => (
+                            <InputCom
+                              placeholder={"Email Address"}
+                              label={"Email Address" + "*"}
+                              type="text"
+                              inputClasses="h-[50px]"
+                              field={field}
+                              error={Boolean(errors?.email)}
+                            />
+                          )}
+                        />
+                        {errors && errors?.email?.message ? (
+                          <span className="text-xs mt-1 text-qred">
+                            {errors?.email?.message}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
 
                     <div className="signin-area mb-3.5">
                       <div className="flex justify-center">
                         <button
-                          onClick={doForgot}
-                          type="button"
-                          disabled={email ? false : true}
-                          className="black-btn disabled:bg-opacity-50 disabled:cursor-not-allowed  mb-6 text-sm text-white w-full h-[50px] font-semibold flex justify-center bg-purple items-center"
+                          type="submit"
+                          className="bg-gradient-button-purple hover:-translate-y-1 duration-300 transition-all rounded-lg disabled:bg-opacity-50 disabled:cursor-not-allowed  mb-6 text-sm text-white w-full h-[50px] font-semibold flex justify-center bg-purple items-center"
                         >
-                          <span>{ServeLangItem()?.Send}</span>
-                          {loading && (
+                          <span>Send</span>
+                          {true && (
                             <span
                               className="w-5 "
                               style={{ transform: "scale(0.3)" }}
@@ -146,10 +179,10 @@ export default function ForgotPass() {
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               ) : resetPass ? (
-                <div className="w-full">
+                <form onSubmit={handleSubmit(onSubmit)} className="input-area">
                   <div className="title-area flex flex-col justify-center items-center relative text-center mb-7">
                     <h1 className="text-[34px] font-bold leading-[74px] text-qblack">
                       {ServeLangItem()?.Reset_Password}
@@ -164,101 +197,98 @@ export default function ForgotPass() {
                       >
                         <path
                           d="M1 28.8027C17.6508 20.3626 63.9476 8.17089 113.509 17.8802C166.729 28.3062 341.329 42.704 353 1"
-                          stroke="#FFBB38"
+                          stroke="#B901BB"
                           strokeWidth="2"
                           strokeLinecap="round"
                         />
                       </svg>
                     </div>
                   </div>
-                  <div className="input-area">
+                  <div onSubmit={handleSubmit(onSubmit)} className="input-area">
                     <div className="input-item mb-5">
-                      <InputCom
-                        placeholder="* * * * * *"
-                        label={ServeLangItem()?.OTP}
-                        name="otp"
-                        type="text"
-                        inputClasses="h-[50px]"
-                        value={otp}
-                        error={errors}
-                        inputHandler={(e) => setOtp(e.target.value.trim())}
-                      />
-                      {/* {errors && Object.hasOwn(errors.data.errors, "email") ? (
-                        <span className="text-sm mt-1 text-qred">
-                          {errors.data.errors.email[0]}
-                        </span>
-                      ) : (
-                        ""
-                      )} */}
+                      <div className="h-full">
+                        <Controller
+                          name="code"
+                          control={control}
+                          render={({ field }) => (
+                            <InputCom
+                              placeholder="* * * * * *"
+                              label={"OTP" + "*"}
+                              type="text"
+                              inputClasses="h-[50px]"
+                              field={field}
+                              error={Boolean(errors?.code)}
+                            />
+                          )}
+                        />
+                        {errors && errors?.code?.message ? (
+                          <span className="text-xs mt-1 text-qred">
+                            {errors?.code?.message}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
                     <div className="input-item mb-5">
-                      <InputCom
-                        placeholder="* * * * * *"
-                        label={ServeLangItem()?.New_Password}
-                        name="new_password"
-                        type="password"
-                        inputClasses="h-[50px]"
-                        value={newPass}
-                        error={
-                          errors &&
-                          errors.data.errors &&
-                          Object.hasOwn(errors.data.errors, "password")
-                            ? true
-                            : false
-                        }
-                        inputHandler={(e) => setNewPass(e.target.value.trim())}
-                      />
-                      {errors &&
-                      errors.data.errors &&
-                      Object.hasOwn(errors.data.errors, "password") ? (
-                        <span className="text-sm mt-1 text-qred">
-                          {errors.data.errors.password[0]}
-                        </span>
-                      ) : (
-                        ""
-                      )}
+                      <div className="h-full">
+                        <Controller
+                          name="password"
+                          control={control}
+                          render={({ field }) => (
+                            <InputCom
+                              placeholder="* * * * * *"
+                              label={"New password" + "*"}
+                              type="text"
+                              inputClasses="h-[50px]"
+                              field={field}
+                              error={Boolean(errors?.password)}
+                            />
+                          )}
+                        />
+                        {errors && errors?.password?.message ? (
+                          <span className="text-xs mt-1 text-qred">
+                            {errors?.password?.message}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
                     <div className="input-item mb-5">
-                      <InputCom
-                        placeholder="* * * * * *"
-                        label={ServeLangItem()?.Confirm_Password + "*"}
-                        name="Confirm Password"
-                        type="password"
-                        inputClasses="h-[50px]"
-                        value={confirmPassword}
-                        error={
-                          errors &&
-                          errors.data.errors &&
-                          Object.hasOwn(errors.data.errors, "password")
-                            ? true
-                            : false
-                        }
-                        inputHandler={(e) =>
-                          setConfirmPassword(e.target.value.trim())
-                        }
-                      />
-                      {errors &&
-                      errors.data.errors &&
-                      Object.hasOwn(errors.data.errors, "password") ? (
-                        <span className="text-sm mt-1 text-qred">
-                          {errors.data.errors.password[0]}
-                        </span>
-                      ) : (
-                        ""
-                      )}
+                      <div className="h-full">
+                        <Controller
+                          name="cpassword"
+                          control={control}
+                          render={({ field }) => (
+                            <InputCom
+                              placeholder="* * * * * *"
+                              label={"Confirm new password" + "*"}
+                              type="text"
+                              inputClasses="h-[50px]"
+                              field={field}
+                              error={Boolean(errors?.cpassword)}
+                            />
+                          )}
+                        />
+                        {errors && errors?.cpassword?.message ? (
+                          <span className="text-xs mt-1 text-qred">
+                            {errors?.cpassword?.message}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
 
                     <div className="signin-area mb-3.5">
                       <div className="flex justify-center">
                         <button
-                          onClick={doReset}
-                          type="button"
-                          disabled={
-                            otp && confirmPassword && newPass ? false : true
-                          }
-                          className="black-btn disabled:bg-opacity-50 disabled:cursor-not-allowed  mb-6 text-sm text-white w-full h-[50px] font-semibold flex justify-center bg-purple items-center"
+                          // onClick={doReset}
+                          type="submit"
+                          className="bg-gradient-button-purple hover:-translate-y-1 duration-300 transition-all rounded-lg disabled:bg-opacity-50 disabled:cursor-not-allowed  mb-6 text-sm text-white w-full h-[50px] font-semibold flex justify-center bg-purple items-center"
                         >
-                          <span>{ServeLangItem()?.Reset}</span>
+                          <span>Reset</span>
                           {loading && (
                             <span
                               className="w-5 "
@@ -271,24 +301,22 @@ export default function ForgotPass() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </form>
               ) : (
                 ""
               )}
             </div>
             <div className="flex-1 lg:flex hidden transform scale-60 xl:scale-100   xl:justify-center ">
               <div
-                className="absolute ltr:xl:-right-20 ltr:-right-[138px] rtl:-left-20 rtl:-left-[138px]"
+                className="absolute ltr:xl:-right-20 ltr:-right-[138px] rtl:-left-20"
                 style={{ top: "calc(50% - 258px)" }}
               >
-                {imgThumb && (
-                  <Image
-                    width={608}
-                    height={480}
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL + imgThumb}`}
-                    alt="login"
-                  />
-                )}
+                <Image
+                  width={608}
+                  height={480}
+                  src={`/assets/images/bannerAuth.png`}
+                  alt="login"
+                />
               </div>
             </div>
           </div>

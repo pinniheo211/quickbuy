@@ -13,7 +13,7 @@ import { fetchCompareProducts } from "../../store/compareProduct";
 import { setupAction } from "../../store/websiteSetup";
 import { fetchWishlist } from "../../store/wishlistData";
 import LoginWidget from "../Auth/Login/LoginWidget";
-import SignupWidget from "../Auth/Signup/SignupWidget";
+import SignupWidget from "../Auth/Signup/SignupDashboard";
 import VerifyWidget from "../Auth/Signup/VerifyWidget";
 import LoginContext from "../Contexts/LoginContext";
 import Consent from "../Helpers/Consent";
@@ -193,7 +193,7 @@ export default function DefaultLayout({ children }) {
                 <div className="w-full h-full fixed left-0 top-0 bg-black bg-opacity-50"></div>
                 <div
                   data-aos="fade-up"
-                  className={`lg:w-[572px] w-full lg:h-[670px] h-full bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0] relative z-40`}
+                  className={`lg:w-[572px] w-full rounded-lg lg:h-[670px] h-full bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0] relative z-40`}
                 >
                   <div
                     onClick={() => getLoginContexts.handlerPopup(false)}

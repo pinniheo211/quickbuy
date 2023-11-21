@@ -38,3 +38,12 @@ export const ProductService = {
     ),
   getAllProduct: () => API.get("/api/v1/user/product/list"),
 };
+
+//auth
+export const AuthService = {
+  doRegister: (data) => API.post("/api/v1/user/authentication/register", data),
+  doLogin: (data) => API.post("/api/v1/user/authentication/login01", data),
+  doForgot: (data) => API.post("/api/v1/user/forgot/email", data),
+  doResetPass: (data) => API.post("/api/v1/user/forgot/verify", data),
+  doVerifyMail: (data) => API.post("/api/v1/user/verify/email", data),
+};

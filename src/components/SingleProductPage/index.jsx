@@ -5,7 +5,6 @@ import ProductCardStyleOne from "../Helpers/Cards/ProductCardStyleOne";
 import DataIteration from "../Helpers/DataIteration";
 import ServeLangItem from "../Helpers/ServeLangItem";
 import Layout from "../Partials/Layout";
-import Multivendor from "../Shared/Multivendor";
 import ProductView from "./ProductView";
 import Reviews from "./Reviews";
 
@@ -122,20 +121,18 @@ export default function SingleProductPage({ details }) {
                         {ServeLangItem()?.Reviews}
                       </span>
                     </li>
-                    {Multivendor() === 1 && details?.is_seller_product && (
-                      <li>
-                        <span
-                          onClick={() => setTab("info")}
-                          className={`py-[15px] sm:text-[15px] text-sm sm:block border-b font-medium cursor-pointer ${
-                            tab === "info"
-                              ? "border-qyellow text-qblack "
-                              : "border-transparent text-qgray"
-                          }`}
-                        >
-                          {ServeLangItem()?.Seller_Info}
-                        </span>
-                      </li>
-                    )}
+                    <li>
+                      <span
+                        onClick={() => setTab("info")}
+                        className={`py-[15px] sm:text-[15px] text-sm sm:block border-b font-medium cursor-pointer ${
+                          tab === "info"
+                            ? "border-qyellow text-qblack "
+                            : "border-transparent text-qgray"
+                        }`}
+                      >
+                        {ServeLangItem()?.Seller_Info}
+                      </span>
+                    </li>
                   </ul>
                 </div>
                 <div className="w-full h-[1px] bg-[#E8E8E8] absolute left-0 sm:top-[50px] top-[36px] -z-10"></div>

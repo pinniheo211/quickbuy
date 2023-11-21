@@ -3,12 +3,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { fetchCart } from "src/store/Cart";
+import apiRequest from "utils/apiRequest";
+import auth from "utils/auth";
 import LoginContext from "../../Contexts/LoginContext";
 import CheckProductIsExistsInFlashSale from "../../Shared/CheckProductIsExistsInFlashSale";
 import ServeLangItem from "../ServeLangItem";
 import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
-
 const Redirect = () => {
   return (
     <div className="flex space-x-2 items-center">
@@ -76,78 +79,38 @@ export default function ProductCardStyleOne({ datas }) {
   // };
   // cart
 
-  // const addToCart = (id) => {
-  //   const data = {
-  //     id: id,
-  //     token: auth() && auth().access_token,
-  //     quantity: 1,
-  //     variants:
-  //       getFirstVarients &&
-  //       getFirstVarients.length > 0 &&
-  //       getFirstVarients.map((v) =>
-  //         v ? parseInt(v.product_variant_id) : null
-  //       ),
-  //     variantItems:
-  //       getFirstVarients &&
-  //       getFirstVarients.length > 0 &&
-  //       getFirstVarients.map((v) => (v ? v.id : null)),
-  //   };
-  //   if (auth()) {
-  //     if (varients) {
-  //       const variantQuery = data.variants.map((value, index) => {
-  //         return value ? `variants[]=${value}` : `variants[]=-1`;
-  //       });
-
-  //       const variantString = variantQuery.map((value) => value + "&").join("");
-
-  //       const itemsQuery = data.variantItems.map((value, index) => {
-  //         return value ? `items[]=${value}` : `items[]=-1`;
-  //       });
-  //       const itemQueryStr = itemsQuery.map((value) => value + "&").join("");
-  //       const uri = `token=${data.token}&product_id=${data.id}&${variantString}${itemQueryStr}quantity=${data.quantity}`;
-  //       apiRequest
-  //         .addToCard(uri)
-  //         .then((res) =>
-  //           toast.success(<Redirect />, {
-  //             autoClose: 5000,
-  //           })
-  //         )
-  //         .catch((err) => {
-  //           console.log(err);
-  //           toast.error(
-  //             err.response &&
-  //               err.response.data.message &&
-  //               err.response.data.message
-  //           );
-  //         });
-  //       dispatch(fetchCart());
-  //     } else {
-  //       const uri = `token=${data.token}&product_id=${data.id}&quantity=${data.quantity}`;
-  //       apiRequest
-  //         .addToCard(uri)
-  //         .then((res) =>
-  //           toast.success(<Redirect />, {
-  //             autoClose: 5000,
-  //           })
-  //         )
-  //         .catch((err) => {
-  //           console.log(err);
-  //           toast.error(
-  //             err.response &&
-  //               err.response.data.message &&
-  //               err.response.data.message
-  //           );
-  //         });
-  //       dispatch(fetchCart());
-  //     }
-  //   } else {
-  //     localStorage.setItem(
-  //       "data-hold",
-  //       JSON.stringify({ type: "add-to-cart", ...data })
-  //     );
-  //     loginPopupBoard.handlerPopup(true);
-  //   }
-  // };
+  const addToCart = (id) => {
+    const data = {
+      id: id,
+      token: auth() && auth().access_token,
+      quantity: 1,
+    };
+    if (auth()) {
+      const uri = `token=${data.token}&product_id=${data.id}&quantity=${data.quantity}`;
+      apiRequest
+        .addToCard(uri)
+        .then((res) =>
+          toast.success(<Redirect />, {
+            autoClose: 5000,
+          })
+        )
+        .catch((err) => {
+          console.log(err);
+          toast.error(
+            err.response &&
+              err.response.data.message &&
+              err.response.data.message
+          );
+        });
+      dispatch(fetchCart());
+    } else {
+      localStorage.setItem(
+        "data-hold",
+        JSON.stringify({ type: "add-to-cart", ...data })
+      );
+      loginPopupBoard.handlerPopup(true);
+    }
+  };
 
   const [imgSrc, setImgSrc] = useState(null);
   const loadImg = (value) => {
@@ -175,7 +138,7 @@ export default function ProductCardStyleOne({ datas }) {
           {/* add to card button */}
           <div className="absolute w-full h-10 px-[30px] left-0 top-40 group-hover:top-[85px] transition-all duration-300 ease-in-out">
             <button
-              // onClick={() => addToCart(datas.id)}
+              onClick={() => addToCart(datas.id)}
               type="button"
               className="yellow-btn group relative w-full h-full flex shadow  justify-center items-center overflow-hidden"
             >

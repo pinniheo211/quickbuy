@@ -20,6 +20,7 @@ export default function Navbar({ className }) {
     let categorySelector = document.querySelector(".category-dropdown");
     setHeight(categorySelector.offsetHeight);
   }, [categoryToggle]);
+  console.log(categoryList, "categoryList");
   return (
     <div
       className={`nav-widget-wrapper w-full  h-[60px] relative z-30  ${
@@ -30,7 +31,7 @@ export default function Navbar({ className }) {
         <div className="w-full h-full relative">
           <div className="w-full h-full flex justify-between items-center">
             <div className="category-and-nav flex xl:rtl:space-x-reverse rtl:space-x-reverse space-x-3 items-center">
-              <div className="category w-[270px] h-[53px] bg-white px-5 rounded-t-md mt-[6px] relative">
+              <div className="category w-[270px] h-[53px] bg-white px-5 rounded-t-md mt-[7px] relative">
                 <button
                   onClick={handler}
                   type="button"
