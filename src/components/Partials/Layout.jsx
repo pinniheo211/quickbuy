@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 import apiRequest from "../../../utils/apiRequest";
 import DiscountBanner from "../DiscountBanner";
 import Drawer from "../Mobile/Drawer";

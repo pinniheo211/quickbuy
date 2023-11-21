@@ -52,7 +52,7 @@ export default function SearchBox({ className }) {
   return (
     <>
       <div
-        className={`w-full h-full flex items-center  border border-qgray-border bg-white  ${
+        className={`w-full h-full flex items-center  border border-qgray-border bg-white rounded-s-lg ${
           className || ""
         }`}
       >
@@ -133,7 +133,7 @@ export default function SearchBox({ className }) {
         </div>
         <button
           onClick={searchHandler}
-          className="search-btn w-[93px]  h-full text-sm font-600 "
+          className="search-btn w-[93px] rounded-e-lg  h-full text-sm font-600 "
           type="button"
         >
           {ServeLangItem()?.Search}

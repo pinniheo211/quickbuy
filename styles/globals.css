@@ -101,6 +101,10 @@ body {
 .product-detail-des :is(p, span, ul li) {
   color: #797979 !important;
 }
+
+.products-section > .swiper {
+  @apply block md:hidden w-full pt-6 h-[400px];
+}
 .about-content :is(h1, h2, h3) {
   color: #222222 !important;
   font-size: 42px !important;
@@ -197,6 +201,10 @@ body {
   .slick-slide.slick-current
   .item {
   opacity: 100%;
+}
+.thinlove:hover {
+  fill: #fff;
+  cursor: pointer;
 }
 @media (min-width: 320px) and (max-width: 1024px) {
   .container {
@@ -343,7 +351,7 @@ body {
 }
 .main-wrapper-card span.anim {
   position: absolute;
-  background-color: #ffbb38;
+  background-color: #b901bb;
   transform-origin: center;
   transition: transform 0.5s ease;
 }
@@ -384,33 +392,33 @@ body {
 .product-row-card-style-one:hover ~ span.bottom,
 .product-card-one:hover ~ span.top,
 .product-card-one:hover ~ span.bottom {
-  transform: scaleX(1);
+  transform: scaleX(0.5);
 }
 
 .product-row-card-style-one:hover ~ span.left,
 .product-row-card-style-one:hover ~ span.right,
 .product-card-one:hover ~ span.left,
 .product-card-one:hover ~ span.right {
-  transform: scaleY(1);
+  transform: scaleY(0.5);
 }
 /*product style row two end*/
 
 /*TODO:=========home one=========*/
 .search-btn {
-  @apply bg-qyellow text-qblack;
+  @apply bg-qyellow text-white;
 }
 .cart-wrappwer {
   @apply border-qyellow;
 }
 .quomodo-shop-middle-bar
   :is(.compaire > span, .favorite > span, .cart-wrapper .cart > span) {
-  @apply bg-qyellow text-qblack;
+  @apply bg-qyellow text-white;
 }
 .quomodo-shop-middle-bar .cart-wrapper .cart-wrappwer {
   @apply border-qyellow;
 }
 .nav-widget-wrapper .nav .nav-wrapper li {
-  @apply text-qblacktext;
+  @apply text-white;
 }
 .quomodo-shop-nav-bar.nav-widget-wrapper {
   @apply bg-qyellow;

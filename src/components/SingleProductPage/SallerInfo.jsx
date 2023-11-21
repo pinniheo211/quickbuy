@@ -1,9 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import ProductCardStyleOne from "../Helpers/Cards/ProductCardStyleOne";
 import DataIteration from "../Helpers/DataIteration";
-import Star from "../Helpers/icons/Star";
-import Link from "next/link";
 import ServeLangItem from "../Helpers/ServeLangItem";
+import Star from "../Helpers/icons/Star";
 export default function SallerInfo({ products, sellerInfo }) {
   const { seller } = sellerInfo;
   const rs =
@@ -123,8 +123,10 @@ export default function SallerInfo({ products, sellerInfo }) {
         </div>
       </div>
       <div className="saller-product w-full mt-[30px]">
-        <h1 className="text-[18px] font-medium mb-5">{ServeLangItem()?.Product_from_Shop}</h1>
-        <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-[30px] gap-5">
+        <h1 className="text-[18px] font-medium mb-5">
+          {ServeLangItem()?.Product_from_Shop}
+        </h1>
+        <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-[10px] gap-5">
           <DataIteration
             datas={rs}
             startLength={0}

@@ -2,13 +2,13 @@ import { useState } from "react";
 
 function SubscribeInputWidget(props) {
   const [email, setEmail] = useState("");
- 
+
   return (
     <div
       data-aos="fade-right"
       className="sm:w-[543px] w-full px-3 h-[54px] flex mt-8 mx-auto"
     >
-      <div className="flex-1 bg-white ltr:pl-4 rtl:pr-4 flex rtl:space-x-reverse space-x-2 items-center h-full focus-within:text-qyellow text-qblack">
+      <div className="flex-1 bg-white ltr:pl-4 rtl:pr-4 flex rtl:space-x-reverse space-x-2 items-center h-full focus-within:text-qyellow text-qblack rounded-lg">
         <span>
           <svg
             width="17"
@@ -44,9 +44,9 @@ function SubscribeInputWidget(props) {
       </div>
       <button
         type="button"
-        className="sm:w-[158px] w-[100px] !text-white h-full bg-qyellow text-sm font-600"
+        className="sm:w-[158px] w-[100px] !text-white h-full bg-qyellow text-sm font-600 rounded-e-lg"
       >
-     Subscribe
+        Subscribe
       </button>
     </div>
   );

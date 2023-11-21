@@ -13,10 +13,10 @@ export default function DiscountBanner() {
       <div className="mb-[70px]">
         <div data-aos="fade-up">
           <h1 className="sm:text-3xl text-xl font-700 text-qblack mb-2 text-center">
-          Start Your Daily Shopping with NOW MARKET
+            Start Your Daily Shopping with NOW MARKET
           </h1>
           <p className="text-center sm:text-[18px] text-sm font-400">
-          Stay home & get your dailyneeds from our shop
+            Stay home & get your dailyneeds from our shop
           </p>
         </div>
         <SubscribeInputWidget />

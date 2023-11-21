@@ -1,3 +1,8 @@
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import { EffectCoverflow, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCardStyleOne from "./Cards/ProductCardStyleOne";
 import DataIteration from "./DataIteration";
 import ViewMoreTitle from "./ViewMoreTitle";
@@ -25,7 +30,7 @@ export default function SectionStyleThree({
     <div className={`section-style-one ${className || ""}`}>
       <ViewMoreTitle categoryTitle={sectionTitle} seeMoreUrl={seeMoreUrl}>
         <div className="products-section w-full">
-          <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-[30px] gap-5">
+          <div className="mt-10 hidden md:grid gap-4 lg:gap-6 2xl:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:!grid-cols-5">
             <DataIteration datas={rs} startLength={0} endLength={rs.length}>
               {({ datas }) => (
                 <div data-aos="fade-up" key={datas.id} className="item">
@@ -34,6 +39,48 @@ export default function SectionStyleThree({
               )}
             </DataIteration>
           </div>
+          <Swiper
+            effect={"coverflow"}
+            centeredSlides={true}
+            coverflowEffect={{
+              rotate: 7,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            }}
+            loop={false}
+            pagination={true}
+            modules={[EffectCoverflow, Pagination]}
+            breakpoints={{
+              300: {
+                slidesPerView: 2,
+              },
+              550: {
+                slidesPerView: 3,
+              },
+            }}
+            initialSlide={2}
+            spaceBetween={20}
+            slidesPerView={3}
+          >
+            {/* <DataIteration datas={rs} startLength={0} endLength={rs.length}>
+              {({ datas }) => (
+                <SwiperSlide key={datas.id} data-aos="fade-up">
+                  <div className="item w-[350px] ">
+                    <ProductCardStyleOne datas={datas} />
+                  </div>
+                </SwiperSlide>
+              )}
+            </DataIteration> */}
+            {rs?.map((datas) => (
+              <SwiperSlide key={datas.id}>
+                <div data-aos="fade-up" className="item w-[250px] ">
+                  <ProductCardStyleOne datas={datas} />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </ViewMoreTitle>
     </div>

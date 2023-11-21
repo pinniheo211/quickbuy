@@ -1,7 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import apiRequest from "../../../../utils/apiRequest";
@@ -12,14 +12,16 @@ import { fetchCompareProducts } from "../../../store/compareProduct";
 import { fetchWishlist } from "../../../store/wishlistData";
 import CheckProductIsExistsInFlashSale from "../../Shared/CheckProductIsExistsInFlashSale";
 import ProductView from "../../SingleProductPage/ProductView";
+import ServeLangItem from "../ServeLangItem";
 import Compair from "../icons/Compair";
 import QuickViewIco from "../icons/QuickViewIco";
 import ThinLove from "../icons/ThinLove";
-import ServeLangItem from "../ServeLangItem";
 const Redirect = () => {
   return (
     <div className="flex space-x-2 items-center">
-      <span className="text-sm text-gray-500">{ServeLangItem()?.Item_added}</span>
+      <span className="text-sm text-gray-500">
+        {ServeLangItem()?.Item_added}
+      </span>
       <Link href="/cart">
         <span className="text-xs border-b border-blue-600 text-blue-600 mr-2 cursor-pointer">
           {ServeLangItem()?.Go_To_Cart}
